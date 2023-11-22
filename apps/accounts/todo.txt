@@ -1,0 +1,2 @@
+write a function that retrieves default membership(@property)
+gotta make signals instead of overriding the save() method
