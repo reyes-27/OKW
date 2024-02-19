@@ -11,7 +11,7 @@ from django.utils.text import slugify
 class AbstractItem(models.Model):
     id =                models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     unit_price =        models.FloatField()
-    discount =          models.FloatField(default=0.00, blank=True, null=True)
+    discount =          models.PositiveSmallIntegerField(validators=[MaxValueValidator(100)], blank=True, null=False, default=0)
     final_price =       models.FloatField()
     class Meta:
         abstract = True
@@ -28,14 +28,11 @@ class Product(AbstractItem):
     def __str__(self) -> str:
         return self.slug
 
-    # def get_final_price(self):
-    #     if self.discount:
-    #         return Product.objects.filter(id=self.id).annotate(self.unit_price - self.discount).values()
     def save(self, *args, **kwargs):
         if not self.final_price:
             self.final_price = self.unit_price
         if self.discount > 0:
-            self.final_price =self.unit_price - self.unit_price * self.discount
+            self.final_price =self.unit_price - self.unit_price * (self.discount / 100)
         if not self.slug:
             self.slug = slugify(self.name)
         super(Product, self).save(*args, **kwargs)

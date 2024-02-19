@@ -1,7 +1,7 @@
 from rest_framework.serializers import (
     HyperlinkedModelSerializer,
     HyperlinkedIdentityField,
-    ModelSerializer
+    ModelSerializer,
     )
 from apps.items.models import (
     Product,
@@ -20,6 +20,7 @@ class ProductSerializer(HyperlinkedModelSerializer):
         lookup_url_kwarg = "slug",
         )
     image_set = ProductImageSerializer(many=True)
+
     class Meta:
         model = Product
         fields = "__all__"
