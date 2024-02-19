@@ -3,9 +3,14 @@ from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 # from .models import Customer, CustomUser
 from .models import CustomerMembership
+from django.utils import timezone
 
+@receiver(post_save, sender=CustomerMembership)
+def set_end_date(sender, created, instance, *args, **kwargs):
+    if created:
+        if instance.model.duration:
+            # instance.start_date = timezone.now().date()
+            instance.end_date = instance.start_date + instance.model.duration
+            instance.save()
+    # print(instance.start_date, "------------>", instance.end_date, " : ", instance.model)
 
-@receiver(pre_save, sender=CustomerMembership)
-def set_end_date(sender, instance, **kwargs): 
-    if instance.membership.duration:
-        instance.end_date = instance.start_date + instance.membership.duration

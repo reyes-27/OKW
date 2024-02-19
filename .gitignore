@@ -1,4 +1,5 @@
 .venv/
 .env
 __pycache__/
+some_shit.txt
 db.sqlite3

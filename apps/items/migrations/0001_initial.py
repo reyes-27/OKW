@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
             name='ProductCover',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', django_resized.forms.ResizedImageField(crop=None, force_format='JPEG', keep_meta=True, quality=100, scale=1, size=[1920, 1080], upload_to=apps.items.models.cover_path)),
+                ('image', django_resized.forms.ResizedImageField(crop=None, force_format='JPEG', keep_meta=True, quality=100, scale=1, size=[1920, 1080], upload_to=apps.items.models.image_path)),
                 ('level', models.PositiveSmallIntegerField(validators=[django.core.validators.MaxValueValidator(5)])),
             ],
             options={

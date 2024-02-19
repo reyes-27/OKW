@@ -1,2 +1,2 @@
-write a function that retrieves default membership(@property)
-gotta make signals instead of overriding the save() method
+Write RegisterAPIView(Creates a User, and a Customer), LoginView
+henever a user logs in, The end_date is going to be compared against timezone.now(django.utils)
