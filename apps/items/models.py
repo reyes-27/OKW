@@ -19,7 +19,7 @@ class AbstractItem(models.Model):
 
 class Product(AbstractItem):
 #STOCK VALUE AUTOMATICALLY DECREASES ONCE A CUSTOMER'S ORDER STATE IS SET TO TRUE
-    slug = models.SlugField(editable=False, blank=True)
+    slug = models.SlugField(editable=False)
     name = models.CharField(max_length=50)
     description = RichTextField()
     stock = models.PositiveIntegerField()
@@ -32,9 +32,8 @@ class Product(AbstractItem):
         if not self.final_price:
             self.final_price = self.unit_price
         if self.discount > 0:
-            self.final_price =self.unit_price - self.unit_price * (self.discount / 100)
-        if not self.slug:
-            self.slug = slugify(self.name)
+            self.final_price = round(self.unit_price - self.unit_price * (self.discount / 100), 2)
+        self.slug = slugify(f"{self.name}-{str(self.id).split("-")[1]}")
         super(Product, self).save(*args, **kwargs)
 
 def image_path(instance, filename):

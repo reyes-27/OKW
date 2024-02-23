@@ -11,7 +11,10 @@ from apps.items.models import (
 class ProductImageSerializer(ModelSerializer):
     class Meta:
         model = ProductImage
-        fields = "__all__"
+        fields = [
+            "image",
+            "level",
+        ]
 
 class ProductSerializer(HyperlinkedModelSerializer):
     url = HyperlinkedIdentityField(

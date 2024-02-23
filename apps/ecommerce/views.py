@@ -41,9 +41,14 @@ class ProductDetailAPIView(APIView):
     
     def patch(self, request, format=None, *args, **kwargs):
         product = self.get_object(kwargs["slug"])
-        serializer = ProductSerializer(product, data=request.data)
+        serializer = ProductSerializer(product, data=request.data, partial=True, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(data={"product":serializer.data})
         else:
             return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
+        
+    def delete(self, request, format=None, *args, **kwargs):
+        product = self.get_object(kwargs["slug"])
+        product.delete()
+        return Response(data={"data":"deleted"}, status=status.HTTP_200_OK)
