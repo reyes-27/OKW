@@ -19,7 +19,7 @@ class FullOrderItemSerializer(HyperlinkedModelSerializer):
 
 
 class FullOrderSerializer(HyperlinkedModelSerializer):
-    items = FullOrderItemSerializer
+    items = FullOrderItemSerializer(many=True)
     class Meta:
         model = Order
         fields = "__all__"

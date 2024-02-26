@@ -6,6 +6,7 @@ from django_resized import ResizedImageField
 from django.db.models import Sum, F
 import uuid
 from django.utils.text import slugify
+from apps.categories.models import Category
 # Create your models here.
 
 class AbstractItem(models.Model):
@@ -18,12 +19,12 @@ class AbstractItem(models.Model):
 
 
 class Product(AbstractItem):
-#STOCK VALUE AUTOMATICALLY DECREASES ONCE A CUSTOMER'S ORDER STATE IS SET TO TRUE
     slug = models.SlugField(editable=False)
     name = models.CharField(max_length=50)
     description = RichTextField()
     stock = models.PositiveIntegerField()
     rate = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)])
+    category = models.ManyToManyField(Category)
     
     def __str__(self) -> str:
         return self.slug
