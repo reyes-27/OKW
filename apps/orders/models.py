@@ -3,7 +3,7 @@ from django.db.models import (
     F,
     Sum,
     )
-from apps.accounts.models import Customer
+from apps.ecommerce.models import Customer
 from apps.items.models import Product
 from uuid import uuid4
 

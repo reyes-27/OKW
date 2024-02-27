@@ -26,6 +26,14 @@ class EcommerceTestCase(APITestCase):
         parsed_data = json.loads(response.content.decode("utf-8"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(parsed_data["data"]["name"], "waos")
+
+    def test_product_detail_view_edit(self):
+        #I have to write permissions before.
+        pass
+
+    def test_product_detail_view_delete(self):
+        pass
+    
     
     def test_product_list_view(self):
         url = reverse(viewname="product-list")
@@ -33,4 +41,3 @@ class EcommerceTestCase(APITestCase):
         parsed_response = json.loads(response.content.decode("utf-8"))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(parsed_response["data"]), 2)
-        # self.assertContains(parsed_response["data"][0]["description"], "pene")
