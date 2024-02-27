@@ -3,15 +3,21 @@ from rest_framework.test import (
     APIClient,
     )
 from apps.accounts.models import CustomUser
+from django.urls import reverse
 # Create your tests here.
 
-class ItemsTest(APITestCase):
-    @classmethod
-    def setUp(cls):
-        cls.user = CustomUser.objects.get(username="Admin")
+# class ItemsTest(APITestCase):
+
+#     def setUp(self):
+#         self.user = CustomUser.objects.create(username="test", email="test@email.com", password="penedemono12")
+#         self.client = APIClient()
+#         self.client.force_authenticate(user=self.user)
         
-        cls.client = APIClient()
-        cls.client.force_authenticate(user=cls.user)
+    
+#     def test_product(self):
+#         view = reverse("")
+#         self.assertAlmostEqual()
+        
 
 
 

@@ -12,7 +12,7 @@ from apps.categories.models import Category
 class AbstractItem(models.Model):
     id =                models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     unit_price =        models.FloatField()
-    discount =          models.PositiveSmallIntegerField(validators=[MaxValueValidator(100)], blank=True, null=False, default=0)
+    discount =          models.PositiveSmallIntegerField(validators=[MaxValueValidator(100)], blank=True, default=0)
     final_price =       models.FloatField()
     class Meta:
         abstract = True
@@ -23,7 +23,7 @@ class Product(AbstractItem):
     name = models.CharField(max_length=50)
     description = RichTextField()
     stock = models.PositiveIntegerField()
-    rate = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)])
+    rate = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], default=0)
     category = models.ManyToManyField(Category)
     
     def __str__(self) -> str:
