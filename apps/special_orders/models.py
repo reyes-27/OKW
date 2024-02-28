@@ -1,7 +1,9 @@
 from django.db import models
 import uuid
+from apps.ecommerce.models import (
+    Clothes,
+    )
 from apps.accounts.models import Customer
-from apps.ecommerce.models import Clothes
 # Create your models here.
 
 def sp_loc(instance, filename):

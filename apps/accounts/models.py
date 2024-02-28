@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 import uuid
 from django.utils.translation import gettext_lazy as _
+from apps.membership.models import CustomerMembership
+from django.core.validators import MaxValueValidator
+from django_countries.fields import CountryField 
 # Create your models here.
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, username, password=None):
@@ -24,6 +27,22 @@ class CustomUser(AbstractUser):
     email = models.EmailField()
     objects = CustomUserManager()
 
-
+class Customer(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="user_customer")
+    phone = models.CharField(max_length=30)
+    first_name = models.CharField(max_length=40)
+    last_name = models.CharField(max_length=40)
+    country = CountryField()
+    membership = models.OneToOneField(to=CustomerMembership, on_delete=models.CASCADE, related_name="customer", blank=True)
+    reputation = models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0, editable=False)
+    is_seller = models.BooleanField(default=False)
+    def get_fullname(self):
+        return f"{self.first_name} {self.last_name}"
+    def save(self, *args, **kwargs):
+        self.first_name = self.first_name.capitalize()
+        self.last_name = self.last_name.capitalize()
+        # if self.membership != None:
+        #     self.membership = CustomerMembership.default_object
+        super(Customer, self).save(*args, **kwargs)
 
 

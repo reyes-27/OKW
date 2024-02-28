@@ -3,7 +3,7 @@ from django.db.models import (
     F,
     Sum,
     )
-from apps.ecommerce.models import Customer
+from apps.accounts.models import Customer
 from apps.items.models import Product
 from uuid import uuid4
 
@@ -45,6 +45,16 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f'{self.product.name} x {self.quantity}'
+    
+class Cart(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    items = models.ManyToManyField(OrderItem)
+
+    def __str__(self):
+        return f"{self.customer.user.username}'s cart"
+    def get_cart_total(self):
+        return Cart.objects.filter(customer=self.customer).annotate(cart_total=Sum(F("items__")))
 # A CART WILL HANDLE MULTIPLE ORDERS 
             
 #summarize Order.total : Sum() 
