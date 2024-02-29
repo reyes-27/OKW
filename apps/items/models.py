@@ -7,7 +7,7 @@ from django.db.models import Sum, F
 import uuid
 from django.utils.text import slugify
 from apps.categories.models import Category
-from apps.accounts.models import Customer
+# from apps.accounts.models import Customer
 
 # Create your models here.
 
@@ -22,7 +22,7 @@ class AbstractItem(models.Model):
 
 class Product(AbstractItem):
     slug = models.SlugField(editable=False)
-    seller = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    # seller = models.ForeignKey(waos(), on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=50)
     description = RichTextField()
     stock = models.PositiveIntegerField()

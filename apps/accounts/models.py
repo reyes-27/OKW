@@ -2,9 +2,10 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 import uuid
 from django.utils.translation import gettext_lazy as _
-from apps.membership.models import CustomerMembership
+# from apps.membership.models import CustomerMembership
 from django.core.validators import MaxValueValidator
 from django_countries.fields import CountryField 
+
 # Create your models here.
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, username, password=None):
@@ -33,7 +34,7 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
     country = CountryField()
-    membership = models.OneToOneField(to=CustomerMembership, on_delete=models.CASCADE, related_name="customer", blank=True)
+    # membership = models.OneToOneField(to=CustomerMembership, on_delete=models.CASCADE, related_name="customer", blank=True)
     reputation = models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0, editable=False)
     is_seller = models.BooleanField(default=False)
     def get_fullname(self):

@@ -2,10 +2,11 @@ from django.db import models
 from django.db.models import F
 from django.utils.translation import gettext_lazy as _
 from apps.items.models import AbstractItem
+from apps.accounts.models import Customer
 from django.core.validators import MaxValueValidator
+from django.utils import timezone
 from django.utils.text import slugify
 import uuid
-from django.utils import timezone
 # Create your models here.
 
 class Membership(AbstractItem):
@@ -32,8 +33,10 @@ class Membership(AbstractItem):
             self.slug = slugify(self.name)
         super(Membership, self).save(*args, **kwargs)
     
+
 class CustomerMembership(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    customer = models.OneToOneField(to=Customer, on_delete=models.CASCADE, related_name="membership", blank=True)
     example = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True, default=Membership.default_object)
     start_date = models.DateField(auto_now=True, null=True)
     end_date = models.DateField(blank=True, null=True)
@@ -62,6 +65,5 @@ class CustomerMembership(models.Model):
     def __str__(self):
         txt = f'{self.model.name} -- {self.id}'
         return txt
-    
     
 
