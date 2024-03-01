@@ -37,7 +37,7 @@ class Membership(AbstractItem):
 class CustomerMembership(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.OneToOneField(to=Customer, on_delete=models.CASCADE, related_name="membership", blank=True)
-    example = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True, default=Membership.default_object)
+    sample = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True, default=Membership.default_object)
     start_date = models.DateField(auto_now=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     status_choices = (

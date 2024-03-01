@@ -1,11 +1,11 @@
 from rest_framework.views import APIView
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
-from .serializers import FullOrderItemSerializer, FullOrderSerializer
+from .serializers import FullCartItemSerializer, FullOrderSerializer
 from apps.items.models import Product
 from .models import (
     Order,
-    OrderItem,
+    CartItem,
     )
 from rest_framework.response import Response
 

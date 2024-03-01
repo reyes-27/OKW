@@ -29,14 +29,14 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
 class Customer(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="user_customer")
-    phone = models.CharField(max_length=30)
-    first_name = models.CharField(max_length=40)
-    last_name = models.CharField(max_length=40)
-    country = CountryField()
+    user =                  models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="user_customer")
+    phone =                 models.CharField(max_length=30)
+    first_name =            models.CharField(max_length=40)
+    last_name =             models.CharField(max_length=40)
+    country =               CountryField()
+    reputation =            models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0, editable=False)
+    is_seller =             models.BooleanField(default=False)
     # membership = models.OneToOneField(to=CustomerMembership, on_delete=models.CASCADE, related_name="customer", blank=True)
-    reputation = models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0, editable=False)
-    is_seller = models.BooleanField(default=False)
     def get_fullname(self):
         return f"{self.first_name} {self.last_name}"
     def save(self, *args, **kwargs):

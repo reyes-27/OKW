@@ -15,7 +15,7 @@ class Order(models.Model):
     customer =              models.ForeignKey(Customer, on_delete=models.CASCADE)
     payment_status =        models.BooleanField(default=False)
     date_ordered =          models.DateTimeField(auto_now_add=True)
-    order_total =           models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    order_total =           models.FloatField(default=0)
     created_at =            models.DateTimeField(auto_now_add=True)
     modified_at =           models.DateTimeField(auto_now=True)
 
@@ -27,29 +27,33 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.customer.get_fullname()} : ({self.date_ordered.date().strftime('%d/%m/%Y')})"
 
-class OrderItem(models.Model):
-    id = models.UUIDField(primary_key=True, editable=False, default=uuid4)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
-    quantity = models.IntegerField()
-    item_total = models.PositiveIntegerField(default=0)
-
-
+class CartItem(models.Model):
+    id =                    models.UUIDField(primary_key=True, editable=False, default=uuid4)
+    product =               models.ForeignKey(Product, on_delete=models.CASCADE)
+    cart =                  models.ForeignKey("Cart", on_delete=models.CASCADE, related_name="items")
+    quantity =              models.IntegerField()
+    item_total =            models.FloatField(default=0)
 
     def save(self, *args, **kwargs):
         if self.quantity > self.product.stock:
             raise Exception("You can't order more items than are left")
         else:
             self.item_total = self.product.unit_price * self.quantity
-            super(OrderItem, self).save(*args, **kwargs)
+            super(CartItem, self).save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.product.name} x {self.quantity}'
     
 class Cart(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    items = models.ManyToManyField(OrderItem)
+    id =                    models.UUIDField(primary_key=True, default=uuid4, editable=True)
+    customer =              models.OneToOneField(Customer, on_delete=models.CASCADE)
+    order =                 models.OneToOneField(Order, on_delete=models.CASCADE)
+    cart_total =            models.FloatField(default=0)
+    created_at =            models.DateTimeField(auto_now_add=True)
+
+    def save(self ,*args, **kwargs):
+        
+        super(Cart, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.customer.user.username}'s cart"
