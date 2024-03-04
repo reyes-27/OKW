@@ -23,9 +23,9 @@ class CustomUserManager(BaseUserManager):
         return user
     
 class CustomUser(AbstractUser):
-    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-    email = models.EmailField()
-    objects = CustomUserManager()
+    id =            models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    email =         models.EmailField()
+    objects =       CustomUserManager()
 
 class Customer(models.Model):
     user =                  models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="user_customer")

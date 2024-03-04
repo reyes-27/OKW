@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/accounts/', include("apps.accounts.urls")),
     path('api/ecommerce/', include("apps.ecommerce.urls")),
     path('api/orders/', include("apps.orders.urls")),
+    path('api/posts/', include("apps.news.urls")),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     re_path(r'^auth/', include('djoser.urls')),

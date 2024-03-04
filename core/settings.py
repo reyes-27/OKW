@@ -49,6 +49,7 @@ MY_APPS = [
     'apps.items.apps.ItemsConfig',
     'apps.membership.apps.MembershipConfig',
     'apps.orders.apps.OrdersConfig',
+    'apps.news.apps.NewsConfig',
     'apps.special_orders.apps.SpecialOrdersConfig',
 ]
 THIRD_PARTY_APPS = [

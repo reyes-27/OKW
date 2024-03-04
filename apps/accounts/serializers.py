@@ -11,7 +11,9 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
 class CustomerSerializer(HyperlinkedModelSerializer):
-    url = HyperlinkedIdentityField(view_name="customer-detail")
+    url = HyperlinkedIdentityField(view_name="customer-detail",
+                                    lookup_field="id",
+                                    lookup_url_kwarg="id")
     class Meta:
         model = Customer
         fields = "__all__"
