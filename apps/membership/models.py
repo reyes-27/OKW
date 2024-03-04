@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import F
 from django.utils.translation import gettext_lazy as _
 from apps.items.models import AbstractItem
-from apps.accounts.models import Customer
+from apps.accounts.models import CustomUser
 from django.core.validators import MaxValueValidator
 from django.utils import timezone
 from django.utils.text import slugify
@@ -36,7 +36,7 @@ class Membership(AbstractItem):
 
 class CustomerMembership(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    customer = models.OneToOneField(to=Customer, on_delete=models.CASCADE, related_name="membership", blank=True)
+    customer = models.OneToOneField(to=CustomUser, on_delete=models.CASCADE, related_name="membership", blank=True)
     sample = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True, default=Membership.default_object)
     start_date = models.DateField(auto_now=True, null=True)
     end_date = models.DateField(blank=True, null=True)
@@ -63,7 +63,7 @@ class CustomerMembership(models.Model):
         return obj
     
     def __str__(self):
-        txt = f'{self.model.name} -- {self.id}'
+        txt = f'{self.sample.name} -- {self.id}'
         return txt
     
 

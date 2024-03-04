@@ -8,7 +8,7 @@ from django.utils import timezone
 @receiver(post_save, sender=CustomerMembership)
 def set_end_date(sender, created, instance, *args, **kwargs):
     if created:
-        if instance.model.duration:
+        if instance.sample.duration:
             # instance.start_date = timezone.now().date()
             instance.end_date = instance.start_date + instance.model.duration
             instance.save()

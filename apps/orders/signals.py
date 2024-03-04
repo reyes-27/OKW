@@ -20,7 +20,7 @@ def check_order(sender, instance, *args, **kwargs):
     if instance.payment_status:
         # product = instance.get_product()
         # product.stock -= 
-        for item in instance.items.all():
+        for item in instance.cart.items.all():
             product = Product.objects.get(id=item.product.id)
             product.stock -= item.quantity
             product.save()

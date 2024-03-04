@@ -18,6 +18,10 @@ class Order(models.Model):
     order_total =           models.FloatField(default=0)
     created_at =            models.DateTimeField(auto_now_add=True)
     modified_at =           models.DateTimeField(auto_now=True)
+    cart =                  models.OneToOneField("Cart", on_delete=models.CASCADE, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        self.order_total = self.cart.cart_total
 
     def get_total(self, *args, **kwargs) -> object:
         """Whenever you submit an order, this function is called and it annotates an order_total value to the order instance"""
@@ -45,14 +49,12 @@ class CartItem(models.Model):
         return f'{self.product.name} x {self.quantity}'
     
 class Cart(models.Model):
-    id =                    models.UUIDField(primary_key=True, default=uuid4, editable=True)
+    id =                    models.UUIDField(primary_key=True, default=uuid4, editable=False)
     customer =              models.OneToOneField(Customer, on_delete=models.CASCADE)
-    order =                 models.OneToOneField(Order, on_delete=models.CASCADE)
     cart_total =            models.FloatField(default=0)
     created_at =            models.DateTimeField(auto_now_add=True)
 
     def save(self ,*args, **kwargs):
-        
         super(Cart, self).save(*args, **kwargs)
 
     def __str__(self):
