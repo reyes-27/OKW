@@ -1,5 +1,5 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework.serializers import HyperlinkedModelSerializer, HyperlinkedIdentityField
+from rest_framework import serializers
 from .models import Customer
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     # AuthUser = TypeVar('AuthUser', get_user_model(), TokenUser)
@@ -10,10 +10,21 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         # token["user_membership"] = user.customer.membership.model.level
         return token
 
-class CustomerSerializer(HyperlinkedModelSerializer):
-    url = HyperlinkedIdentityField(view_name="customer-detail",
-                                    lookup_field="id",
-                                    lookup_url_kwarg="id")
+class ShortCustomerSerializer(serializers.ModelSerializer):
+    def get_full_name(self, obj):
+        return obj.get_fullname()
+    full_name = serializers.SerializerMethodField()
+    class Meta:
+        model = Customer
+        fields = [
+            "id",
+            "profile_pic",
+            "full_name",
+            "reputation",
+            "is_seller",
+        ]
+
+class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
         fields = "__all__"

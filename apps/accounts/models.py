@@ -4,7 +4,8 @@ import uuid
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MaxValueValidator
 from django_countries.fields import CountryField 
-
+from django_resized import ResizedImageField
+from .utils import image_path
 # Create your models here.
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, username, password=None):
@@ -28,16 +29,19 @@ class CustomUser(AbstractUser):
     objects =       CustomUserManager()
 
 class Customer(models.Model):
+    id =                    models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     user =                  models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="user_customer")
     phone =                 models.CharField(max_length=30)
     first_name =            models.CharField(max_length=40)
     last_name =             models.CharField(max_length=40)
     country =               CountryField()
+    profile_pic =           ResizedImageField(upload_to=image_path, default="default.png")
     reputation =            models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0, editable=False)
     is_seller =             models.BooleanField(default=False)
     # membership = models.OneToOneField(to=CustomerMembership, on_delete=models.CASCADE, related_name="customer", blank=True)
     def __str__(self):
         return f'{self.user.username} Customer'
+    
     def get_fullname(self):
         return f"{self.first_name} {self.last_name}"
     def save(self, *args, **kwargs):

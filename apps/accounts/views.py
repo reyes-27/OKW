@@ -13,6 +13,7 @@ from django.http import Http404
 
 # Create your views here.
 
+
 class CustomerProfileDetailView(APIView):
     permission_classes = [AllowAny,]
     def get_object(self, customer_id):
@@ -23,7 +24,7 @@ class CustomerProfileDetailView(APIView):
             raise Http404("Customer does not exist")
     def get(self, request, *args, **kwargs):
         customer = self.get_object(kwargs["id"])
-        serializer = CustomerSerializer(customer, context = {'request':request})
+        serializer = CustomerSerializer(customer)
         return Response(data={"customer":serializer.data}, status=status.HTTP_200_OK)
     
     def patch(self, request, *args, **kwargs):
