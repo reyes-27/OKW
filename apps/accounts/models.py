@@ -41,8 +41,8 @@ class Customer(models.Model):
     # membership = models.OneToOneField(to=CustomerMembership, on_delete=models.CASCADE, related_name="customer", blank=True)
     def __str__(self):
         return f'{self.user.username} Customer'
-    
-    def get_fullname(self):
+    @property
+    def full_name(self):
         return f"{self.first_name} {self.last_name}"
     def save(self, *args, **kwargs):
         self.first_name = self.first_name.capitalize()

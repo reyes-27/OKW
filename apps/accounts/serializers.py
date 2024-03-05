@@ -12,7 +12,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class ShortCustomerSerializer(serializers.ModelSerializer):
     def get_full_name(self, obj):
-        return obj.get_fullname()
+        return obj.full_name
     full_name = serializers.SerializerMethodField()
     class Meta:
         model = Customer

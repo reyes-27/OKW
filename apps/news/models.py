@@ -13,11 +13,31 @@ class Like(models.Model):
     user =                      models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="users_likes")
     post =                      models.ForeignKey("Post", on_delete=models.CASCADE, related_name="posts_likes")
     already_liked =             models.BooleanField(default=False)
-
+    def save(self, *args, **kwargs):
+        print("pene")
+        if not self.already_liked:
+            self.post.likes += 1
+            self.already_liked = True
+            self.post.save()
+        super(Like, self).save(*args, **kwargs)
+    def delete(self, *args, **kwargs):
+        self.post.likes -= 1
+        self.post.save()
+        super(Like, self).delete(*args, **kwargs)
 class Dislike(models.Model):
     user =                      models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="users_dislikes")
     post =                      models.ForeignKey("Post", on_delete=models.CASCADE, related_name="posts_dislikes")
     already_disliked =          models.BooleanField(default=False)
+    def save(self, *args, **kwargs):
+        if not self.already_disliked:
+            self.post.dislikes += 1
+            self.already_disliked = True
+            self.post.save()
+        super(Dislike, self).save(*args, **kwargs)
+    def delete(self, *args, **kwargs):
+        self.post.dislikes -= 1
+        self.post.save()
+        super(Dislike, self).delete(*args, **kwargs)
 
 class Post(models.Model):
     parent =                models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, related_name="post_parent")
@@ -48,6 +68,12 @@ class Post(models.Model):
                                                     blank=True, related_name="user_liked_posts"
                                                     )
     edited =                models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            self.edited = True
+        super(Post, self).save(*args, **kwargs)
+        
 
 class PostImage(models.Model):
     id =                models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
