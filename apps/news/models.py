@@ -86,6 +86,7 @@ class Comment(models.Model):
     parent =            models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
     user =              models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     post =              models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    # user_likes =        models.
     text =              models.TextField()
     pub_date =          models.DateTimeField(auto_now_add=True)
     edited =            models.BooleanField(default=False)
