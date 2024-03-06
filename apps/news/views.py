@@ -23,7 +23,6 @@ class PostListAPIView(APIView):
         return Response(data={"data":serializer.data}, status=status.HTTP_200_OK)
 class PostDetailAPIView(APIView):
     permission_classes = [AllowAny, ]
-
     def get_object(self, post_id):
         obj = Post.objects.get(id=post_id)
         return obj
