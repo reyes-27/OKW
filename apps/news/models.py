@@ -39,6 +39,11 @@ class Dislike(models.Model):
         self.post.save()
         super(Dislike, self).delete(*args, **kwargs)
 
+class CommentLike(models.Model):
+    user =                          models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="users_comment_likes")
+    comment =                       models.ForeignKey("Comment", on_delete=models.CASCADE, related_name="comment_likes")
+    already_liked =                 models.BooleanField(default=False)
+
 class Post(models.Model):
     parent =                models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, related_name="post_parent")
     id =                    models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -56,7 +61,7 @@ class Post(models.Model):
                                                         "post",
                                                         "user",
                                                     ),
-                                                    blank=True, related_name="user_disliked_posts"
+                                                    related_name="user_disliked_posts"
                                                     )
     user_likes =            models.ManyToManyField(
                                                     CustomUser,
@@ -65,7 +70,7 @@ class Post(models.Model):
                                                         "post",
                                                         "user",
                                                     ),
-                                                    blank=True, related_name="user_liked_posts"
+                                                    related_name="user_liked_posts"
                                                     )
     edited =                models.BooleanField(default=False)
 
@@ -84,11 +89,19 @@ class PostImage(models.Model):
 class Comment(models.Model):
     id =                models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     parent =            models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
-    user =              models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user =              models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="user_comments")
     post =              models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
-    # user_likes =        models.
+    user_likes =        models.ManyToManyField(
+                                                CustomUser,
+                                                through=CommentLike,
+                                                through_fields=(
+                                                    "comment",
+                                                    "user",
+                                                    ),
+                                                )
+    likes =             models.PositiveIntegerField(default=0)
     text =              models.TextField()
     pub_date =          models.DateTimeField(auto_now_add=True)
     edited =            models.BooleanField(default=False)
-
+    
 

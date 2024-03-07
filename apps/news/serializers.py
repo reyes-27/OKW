@@ -31,7 +31,9 @@ class PostImageSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = "__all__"
+        exclude = [
+            "user_likes"
+        ]
 class PostSerializer(serializers.HyperlinkedModelSerializer):
 
     url = serializers.HyperlinkedIdentityField(
@@ -56,17 +58,16 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
 
         return absolute_url
     
+    def get_comments(self, instance):
+        most_liked_comments = instance.comments.order_by("likes").filter(parent=None)[:5]
+        return CommentSerializer(most_liked_comments, many=True).data
+    
     user = ShortCustomerSerializer()
     category = CategorySerializer(many=True)
     user_dislikes = serializers.SerializerMethodField()
     user_likes = serializers.SerializerMethodField()
     image_set = PostImageSerializer(many=True)
-    # comments
+    comments = serializers.SerializerMethodField()
     class Meta:
         model = Post
         fields = "__all__"
-        # exclude = [
-        #     # "user_dislikes",
-        #     "user_likes",
-        #     ]
-
