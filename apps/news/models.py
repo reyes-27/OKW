@@ -43,6 +43,16 @@ class CommentLike(models.Model):
     user =                          models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="users_comment_likes")
     comment =                       models.ForeignKey("Comment", on_delete=models.CASCADE, related_name="comment_likes")
     already_liked =                 models.BooleanField(default=False)
+    def save(self, *args, **kwargs):
+        if not self.already_liked:
+            self.comment.likes += 1
+            self.already_liked = True
+            self.comment.save()
+        super(CommentLike, self).save(*args, **kwargs)
+    def delete(self, *args, **kwargs):
+        self.comment.likes -= 1
+        self.comment.save()
+        super(CommentLike, self).delete(*args, **kwargs)
 
 class Post(models.Model):
     parent =                models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, related_name="post_parent")

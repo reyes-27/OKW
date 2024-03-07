@@ -59,9 +59,16 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
         return absolute_url
     
     def get_comments(self, instance):
-        most_liked_comments = instance.comments.order_by("likes").filter(parent=None)[:5]
-        return CommentSerializer(most_liked_comments, many=True).data
-    
+        is_list_view = self.context["request"].path == "/api/posts/"
+        if is_list_view:
+            #If is list view, only the three most liked comments will be shown
+            comments = instance.comments.order_by("likes").filter(parent=None)[:3]
+            return CommentSerializer(comments, many=True).data
+        else:
+            #Otherwise paginated comments
+            comments = f'{self.context["request"].build_absolute_uri('/')[:-1]}{self.context["request"].path}comments/'
+            return comments
+
     user = ShortCustomerSerializer()
     category = CategorySerializer(many=True)
     user_dislikes = serializers.SerializerMethodField()

@@ -6,11 +6,13 @@ from .models import (
     Post,
     Like,
     Dislike,
+    Comment,
     )
 from .serializers import (
     PostSerializer,
     LikeSerializer,
     DislikeSerializer,
+    CommentSerializer,
     )
 
 # Create your views here.
@@ -36,12 +38,19 @@ class LikeListAPIView(APIView):
     permission_classes = [AllowAny, ]
     def get(self, request, *args, **kwargs):
         likes = Like.objects.filter(post=kwargs["id"])
-        serializers = LikeSerializer(likes, many=True)
-        return Response(data={"data":serializers.data}, status=status.HTTP_200_OK)
+        serializer = LikeSerializer(likes, many=True)
+        return Response(data={"data":serializer.data}, status=status.HTTP_200_OK)
     
 class DislikeListAPIView(APIView):
     permission_classes = [AllowAny, ]
     def get(self, request, *args, **kwargs):
         dislikes = Dislike.objects.filter(post=kwargs["id"])
-        serializers = DislikeSerializer(dislikes, many=True)
-        return Response(data={"data":serializers.data}, status=status.HTTP_200_OK)
+        serializer = DislikeSerializer(dislikes, many=True)
+        return Response(data={"data":serializer.data}, status=status.HTTP_200_OK)
+    
+class CommentListAPIView(APIView):
+    permission_classes = [AllowAny, ]
+    def get(self, request, *args, **kwargs):
+        comments = Comment.objects.filter(post=kwargs["id"])
+        serializer = CommentSerializer(comments, many=True)
+        return Response(data={"data":serializer.data}, status=status.HTTP_200_OK)
