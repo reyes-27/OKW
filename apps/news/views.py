@@ -24,6 +24,15 @@ class PostListAPIView(APIView):
         posts = Post.objects.all()
         serializer = PostSerializer(posts, many=True, context={"request":request})
         return Response(data={"data":serializer.data}, status=status.HTTP_200_OK)
+    def post(self, request, *args, **kwargs):
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data={"data":serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response(data={"error":serializer.errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        
+
 class PostDetailAPIView(APIView):
     permission_classes = [AllowAny, ]
     def get_object(self, post_id):
