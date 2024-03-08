@@ -14,6 +14,7 @@ from .serializers import (
     DislikeSerializer,
     CommentSerializer,
     )
+from .paginators import StandardResultsSetPagination
 
 # Create your views here.
 
@@ -51,6 +52,8 @@ class DislikeListAPIView(APIView):
 class CommentListAPIView(APIView):
     permission_classes = [AllowAny, ]
     def get(self, request, *args, **kwargs):
-        comments = Comment.objects.filter(post=kwargs["id"])
+        paginator = StandardResultsSetPagination()
+        comments = Comment.objects.order_by("-likes").filter(post=kwargs["id"])
         serializer = CommentSerializer(comments, many=True)
-        return Response(data={"data":serializer.data}, status=status.HTTP_200_OK)
+        paginator.paginate_queryset(queryset=serializer.data, request=request)
+        return paginator.get_paginated_response(data={"data":serializer.data})

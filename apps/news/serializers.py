@@ -62,7 +62,7 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
         is_list_view = self.context["request"].path == "/api/posts/"
         if is_list_view:
             #If is list view, only the three most liked comments will be shown
-            comments = instance.comments.order_by("likes").filter(parent=None)[:3]
+            comments = instance.comments.filter(parent=None)[:3]
             return CommentSerializer(comments, many=True).data
         else:
             #Otherwise paginated comments
