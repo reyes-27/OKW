@@ -69,12 +69,12 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
             comments = f'{self.context["request"].build_absolute_uri('/')[:-1]}{self.context["request"].path}comments/'
             return comments
 
-    user = ShortCustomerSerializer()
-    category = CategorySerializer(many=True)
-    user_dislikes = serializers.SerializerMethodField()
-    user_likes = serializers.SerializerMethodField()
-    image_set = PostImageSerializer(many=True)
-    comments = serializers.SerializerMethodField()
+    user = ShortCustomerSerializer(read_only=True)
+    category = CategorySerializer(many=True, read_only=True)
+    user_dislikes = serializers.SerializerMethodField(read_only=True)
+    user_likes = serializers.SerializerMethodField(read_only=True)
+    image_set = PostImageSerializer(many=True, read_only=True)
+    comments = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Post
         fields = "__all__"
