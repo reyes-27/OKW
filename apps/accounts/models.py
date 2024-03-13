@@ -30,7 +30,7 @@ class CustomUser(AbstractUser):
 
 class Customer(models.Model):
     id =                    models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-    user =                  models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="user_customer")
+    user =                  models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="customer")
     phone =                 models.CharField(max_length=30)
     first_name =            models.CharField(max_length=40)
     last_name =             models.CharField(max_length=40)

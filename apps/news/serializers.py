@@ -75,6 +75,7 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
     user_likes = serializers.SerializerMethodField(read_only=True)
     image_set = PostImageSerializer(many=True, read_only=True)
     comments = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Post
         fields = "__all__"

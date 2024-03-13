@@ -16,17 +16,10 @@ from .serializers import (
     CommentSerializer,
     )
 from .paginators import StandardResultsSetPagination
-from rest_framework.generics import ListCreateAPIView
 
 # Create your views here.
 
-# class PostListAPIView(ListCreateAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
-#     permission_classes = [AllowAny, ]
-
-
-class PostListAPIView(APIView):
+class PostListCreateAPIView(APIView):
     permission_classes = [AllowAny, ]
     def get(self, request, *args, **kwargs):
         posts = Post.objects.all()
@@ -35,13 +28,9 @@ class PostListAPIView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = PostSerializer(data=request.data, context={"request":request})
         if self.request and hasattr(self.request, "user") and not isinstance(self.request.user, AnonymousUser):
-            serializer.initial_data["user"] = self.request.user
-        print(serializer.initial_data)
-        
-    
+            pass
         if serializer.is_valid():
-
-            serializer.save()
+            serializer.save(user=request.user.customer)
             return Response(data={"data":serializer.data}, status=status.HTTP_200_OK)
         else:
             return Response(data={"error":serializer.errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -80,3 +69,4 @@ class CommentListAPIView(APIView):
         serializer = CommentSerializer(comments, many=True)
         paginator.paginate_queryset(queryset=serializer.data, request=request)
         return paginator.get_paginated_response(data={"data":serializer.data})
+    

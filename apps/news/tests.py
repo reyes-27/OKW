@@ -25,12 +25,12 @@ class NewsAPITestCase(APITestCase):
         #Getting many images for testing
         byteImgIO1 = io.BytesIO()
         post_image1 = Image.open(f'{settings.MEDIA_ROOT}/assets/sukuna.png')
-        post_image1.save(byteImgIO1, "PNG")
+        # post_image1.save(byteImgIO1, "PNG")
         self.sukuna_img = ContentFile(byteImgIO1.getvalue(), "sukuna.png")
 
         byteImgIO2 = io.BytesIO()
         post_image2 = Image.open(f'{settings.MEDIA_ROOT}/assets/waos.png')
-        post_image2.save(byteImgIO2, "PNG")
+        # post_image2.save(byteImgIO2, "PNG")
         self.waos_img = ContentFile(byteImgIO2.getvalue(), "waos.png")
         category=Category.objects.create(name="TestCategory", desc="WAos")
         self.post = Post.objects.create(
@@ -47,37 +47,30 @@ class NewsAPITestCase(APITestCase):
     def test_post_list_view_POST(self):
         url = reverse("post-list")
         data = {
-                    # "user": {
-                    #     "id": "17099b14-16b0-4a40-a4fa-2992b4265633",
-                    #     "full_name": "Daniel Reyes",
-                    #     "reputation": 0,
-                    #     "is_seller": True
-                    # },
-                    "user":{"id":self.customer.id},
-                    "category": [
-                        {
-                            "id": 1,
-                            "name": "Tech",
-                            "desc": "waos",
-                            "parent": None
-                        }
-                    ],
-                    "header": "Testing post method",
+                    # "category": [
+                    #     {
+                    #         "id": 1,
+                    #         "name": "Tech",
+                    #         "desc": "waos",
+                    #         "parent": None
+                    #     }
+                    # ],
+                    "header": "Test header",
                     "description": "WAos",
-                    "image_set": [
-                        # {
-                        #     "image":self.sukuna_img.read(),
-                        #     "level": 0
-                        # },
-                        # {
-                        #     "image":self.waos_img.read(),
-                        #     "level":1
-                        # }
-                    ]
+                    # "image_set": [
+                    #     {
+                    #         "image":self.sukuna_img.read(),
+                    #         "level": 0
+                    #     },
+                    #     {
+                    #         "image":self.waos_img.read(),
+                    #         "level":1
+                    #     }
+                    # ]
                 }
-        response = self.client.post(path=url, data=data, format="json")
+        response = self.client.post(path=url, data=data, format='json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response["data"]["header"], "Test header")
+        self.assertEqual(response.data["data"]["header"], "Test header")
 
     def test_post_list_view_GET(self):
         url = reverse(viewname="post-list")
@@ -85,14 +78,3 @@ class NewsAPITestCase(APITestCase):
         parsed_response = json.loads(response.content.decode("utf-8"))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(parsed_response["data"]), 1)
-
-
-# {
-
-#                     "user":{"id":self.customer.id},
-#                     "category":{"id":1},
-#                     "header": "Testing post method",
-#                     "description": "WAos",
-#                     "image_set": [
-#                     ]
-# }
