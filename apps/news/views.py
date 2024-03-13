@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import AnonymousUser
@@ -16,7 +17,6 @@ from .serializers import (
     CommentSerializer,
     )
 from .paginators import StandardResultsSetPagination
-from rest_framework.generics import ListCreateAPIView
 
 # Create your views here.
 
@@ -28,6 +28,7 @@ from rest_framework.generics import ListCreateAPIView
 
 class PostListAPIView(APIView):
     permission_classes = [AllowAny, ]
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
     def get(self, request, *args, **kwargs):
         posts = Post.objects.all()
         serializer = PostSerializer(posts, many=True, context={"request":request})
@@ -36,12 +37,8 @@ class PostListAPIView(APIView):
         serializer = PostSerializer(data=request.data, context={"request":request})
         if self.request and hasattr(self.request, "user") and not isinstance(self.request.user, AnonymousUser):
             serializer.initial_data["user"] = self.request.user
-        print(serializer.initial_data)
-        
-    
         if serializer.is_valid():
-
-            serializer.save()
+            serializer.save(user=request.user.customer)
             return Response(data={"data":serializer.data}, status=status.HTTP_200_OK)
         else:
             return Response(data={"error":serializer.errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
