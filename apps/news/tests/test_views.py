@@ -8,6 +8,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 # Create your tests here.
 
 class NewsAPITestCase(APITestCase):
+    fixtures = ['news_post', 'accounts']
     def setUp(self):
         self.user = CustomUser.objects.create(username="test", email="test@email.com", password="penedemono12")
         self.customer = Customer.objects.create(
@@ -18,6 +19,7 @@ class NewsAPITestCase(APITestCase):
             country = "Nigeria",
             is_seller = True
         )
+
         self.sukuna_img = SimpleUploadedFile("sukuna.png", content=open(r"C:\Users\dani2\Documents\Backend-projects\OKW\testing-assets\sukuna.png", "rb").read(), content_type="image/png")
         self.waos_img = SimpleUploadedFile("waos.png", content=open(r"C:\Users\dani2\Documents\Backend-projects\OKW\testing-assets\waos.png", "rb").read(), content_type="image/png")
         category=Category.objects.create(name="TestCategory", desc="WAos")

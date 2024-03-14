@@ -1,0 +1,66 @@
+[
+    {
+        "model": "news.post",
+        "pk": "276be5a1-8a93-4c4e-93ec-98908c345d29",
+        "fields": {
+            "parent": null,
+            "user": "17099b14-16b0-4a40-a4fa-2992b4265633",
+            "header": "Why is my pc so ass?",
+            "description": "<p>waos</p>",
+            "pub_date": "2024-03-05T20:27:54.997Z",
+            "likes": 1,
+            "dislikes": 0,
+            "edited": true,
+            "category": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": "36749bf9-3f0a-45f8-b517-a83ba4de712a",
+        "fields": {
+            "parent": null,
+            "user": "17099b14-16b0-4a40-a4fa-2992b4265633",
+            "header": "hola",
+            "description": null,
+            "pub_date": "2024-03-12T22:08:31.306Z",
+            "likes": 0,
+            "dislikes": 0,
+            "edited": true,
+            "category": []
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": "75073fed-b22f-40f3-a363-5ec145d5704b",
+        "fields": {
+            "parent": null,
+            "user": "17099b14-16b0-4a40-a4fa-2992b4265633",
+            "header": "Holaaa",
+            "description": null,
+            "pub_date": "2024-03-12T20:38:12.271Z",
+            "likes": 0,
+            "dislikes": 0,
+            "edited": true,
+            "category": []
+        }
+    },
+    {
+        "model": "news.post",
+        "pk": "b5bdeb56-ea1d-4b1d-b6d8-8487d1ace846",
+        "fields": {
+            "parent": null,
+            "user": "17099b14-16b0-4a40-a4fa-2992b4265633",
+            "header": "Tired of this website already",
+            "description": "<p>WAos</p>",
+            "pub_date": "2024-03-07T17:28:01.192Z",
+            "likes": 1,
+            "dislikes": 0,
+            "edited": true,
+            "category": [
+                1
+            ]
+        }
+    }
+]

@@ -95,10 +95,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
-
-
-
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Password validation
@@ -141,3 +137,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+FIXTURE_DIRS = [BASE_DIR/"fixtures", ]
