@@ -43,9 +43,20 @@ class EcommerceTestCase(APITestCase):
     #     pass
     
     
-    def test_product_list_view(self):
+    def test_product_list_view_GET(self):
+        #Testing GET method
         url = reverse(viewname="product-list")
         response = self.client.get(path=url)
         parsed_response = json.loads(response.content.decode("utf-8"))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(parsed_response["data"]), 2)
+        data = {
+                "name":"test product",
+                "description":"Test description", 
+                "stock":70,
+                "unit_price":199
+                }
+        response = self.client.post(path=url, data=data, format='json')
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data["name"], "test product")

@@ -53,6 +53,7 @@ class CustomerMembership(models.Model):
     #     super(CustomerMembership, self).save(*args, **kwargs)
 
     def set_status(self):
+        """This function sets expired customer membemberships to suspended. Is called whenever the user logs in"""
         if self.end_date <= timezone.now().date():
             self.status = "SUSPENDED"
             self.save()

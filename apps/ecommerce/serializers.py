@@ -7,6 +7,7 @@ from apps.items.models import (
     Product,
     ProductImage,
     )
+from apps.categories.serializers import CategorySerializer
 from apps.accounts.serializers import ShortCustomerSerializer
 class ProductImageSerializer(ModelSerializer):
     class Meta:
@@ -22,8 +23,9 @@ class ProductSerializer(HyperlinkedModelSerializer):
         lookup_field = "slug",
         lookup_url_kwarg = "slug",
         )
-    image_set = ProductImageSerializer(many=True)
-    seller = ShortCustomerSerializer()
+    image_set = ProductImageSerializer(many=True, read_only=True)
+    seller = ShortCustomerSerializer(read_only=True)
+    category = CategorySerializer(many=True, read_only=True)
 
     class Meta:
         model = Product

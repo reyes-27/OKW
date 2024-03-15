@@ -1,0 +1,34 @@
+[
+    {
+        "model": "accounts.customuser",
+        "pk": "fcf717bf-63cd-463d-bec9-62aa8845a27d",
+        "fields": {
+            "password": "pbkdf2_sha256$600000$d2UzljoR42Mxt1b82B9mVj$0L/5INCAk6CNXi7HieAtm3XF4zm9a7PeONQlJV5aC4Y=",
+            "last_login": "2024-03-04T18:38:23.735Z",
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2024-03-04T18:36:03.489Z",
+            "email": "admin@email.com",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "accounts.customer",
+        "pk": "17099b14-16b0-4a40-a4fa-2992b4265633",
+        "fields": {
+            "user": "fcf717bf-63cd-463d-bec9-62aa8845a27d",
+            "phone": "5556667777",
+            "first_name": "Daniel",
+            "last_name": "Reyes",
+            "country": "VE",
+            "profile_pic": "default.png",
+            "reputation": 0,
+            "is_seller": true
+        }
+    }
+]
