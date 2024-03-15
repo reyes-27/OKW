@@ -27,7 +27,7 @@ class Product(AbstractItem):
     description =       RichTextField()
     stock =             models.PositiveIntegerField()
     rate =              models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], default=0)
-    category =          models.ManyToManyField(Category)
+    categories =        models.ManyToManyField(Category)
     
     def __str__(self) -> str:
         return self.slug

@@ -70,12 +70,11 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
             return comments
 
     user = ShortCustomerSerializer(read_only=True)
-    category = CategorySerializer(many=True, read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
     user_dislikes = serializers.SerializerMethodField(read_only=True)
     user_likes = serializers.SerializerMethodField(read_only=True)
     image_set = PostImageSerializer(many=True, read_only=True)
     comments = serializers.SerializerMethodField(read_only=True)
-
     class Meta:
         model = Post
         fields = "__all__"

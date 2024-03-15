@@ -22,7 +22,7 @@ class NewsAPITestCase(APITestCase):
 
         self.sukuna_img = SimpleUploadedFile("sukuna.png", content=open(r"C:\Users\dani2\Documents\Backend-projects\OKW\testing-assets\sukuna.png", "rb").read(), content_type="image/png")
         self.waos_img = SimpleUploadedFile("waos.png", content=open(r"C:\Users\dani2\Documents\Backend-projects\OKW\testing-assets\waos.png", "rb").read(), content_type="image/png")
-        category=Category.objects.create(name="TestCategory", desc="WAos")
+        category = Category.objects.create(name="TestCategory", desc="WAos")
         self.post = Post.objects.create(
                                         user=self.customer,
                                         header="Test header",
@@ -37,26 +37,8 @@ class NewsAPITestCase(APITestCase):
     def test_post_list_view_POST(self):
         url = reverse("post-list")
         data = {
-                    # "category": [
-                    #     {
-                    #         "id": 1,
-                    #         "name": "Tech",
-                    #         "desc": "waos",
-                    #         "parent": None
-                    #     }
-                    # ],
                     "header": "Test header",
                     "description": "WAos",
-                    # "image_set": [
-                    #     {
-                    #         "image":self.sukuna_img.read(),
-                    #         "level": 0
-                    #     },
-                    #     {
-                    #         "image":self.waos_img.read(),
-                    #         "level":1
-                    #     }
-                    # ]
                 }
         response = self.client.post(path=url, data=data, format='json')
         self.assertEqual(response.status_code, 200)
@@ -67,6 +49,4 @@ class NewsAPITestCase(APITestCase):
         response = self.client.get(path=url)
         parsed_response = json.loads(response.content.decode("utf-8"))
         self.assertEqual(response.status_code, 200)
-        print(response.data)
-        # self.assertEqual(len(parsed_response["data"][0]["image_set"]), 2)
-        self.assertEqual(len(parsed_response["data"]), 1)
+        self.assertEqual(len(parsed_response["data"]), 5)

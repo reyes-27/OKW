@@ -14,7 +14,6 @@ class Like(models.Model):
     post =                      models.ForeignKey("Post", on_delete=models.CASCADE, related_name="posts_likes")
     already_liked =             models.BooleanField(default=False)
     def save(self, *args, **kwargs):
-        print("pene")
         if not self.already_liked:
             self.post.likes += 1
             self.already_liked = True
@@ -61,7 +60,7 @@ class Post(models.Model):
     header =                models.CharField(max_length=255)
     description =           RichTextField(blank=True, null=True)
     pub_date =              models.DateTimeField(auto_now_add=True)
-    category =              models.ManyToManyField(Category, related_name="posts")
+    categories =            models.ManyToManyField(Category, related_name="posts")
     likes =                 models.PositiveIntegerField(default=0)
     dislikes =              models.PositiveIntegerField(default=0)
     user_dislikes =         models.ManyToManyField(

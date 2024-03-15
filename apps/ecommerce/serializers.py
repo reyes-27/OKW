@@ -25,7 +25,7 @@ class ProductSerializer(HyperlinkedModelSerializer):
         )
     image_set = ProductImageSerializer(many=True, read_only=True)
     seller = ShortCustomerSerializer(read_only=True)
-    category = CategorySerializer(many=True, read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
 
     class Meta:
         model = Product

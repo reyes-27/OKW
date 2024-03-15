@@ -11,7 +11,7 @@
             "likes": 1,
             "dislikes": 0,
             "edited": true,
-            "category": [
+            "categories": [
                 1
             ]
         }
@@ -28,7 +28,7 @@
             "likes": 0,
             "dislikes": 0,
             "edited": true,
-            "category": []
+            "categories": []
         }
     },
     {
@@ -43,7 +43,7 @@
             "likes": 0,
             "dislikes": 0,
             "edited": true,
-            "category": []
+            "categories": []
         }
     },
     {
@@ -58,7 +58,7 @@
             "likes": 1,
             "dislikes": 0,
             "edited": true,
-            "category": [
+            "categories": [
                 1
             ]
         }
