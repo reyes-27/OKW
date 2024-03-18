@@ -1,0 +1,13 @@
+[
+    {
+        "model": "membership.customermembership",
+        "pk": "4dde1b11-79a1-4681-b08d-157ad11e45da",
+        "fields": {
+            "user": "fcf717bf-63cd-463d-bec9-62aa8845a27d",
+            "sample": "27fe6d3c-a891-476f-b1d6-62e51292a4fb",
+            "start_date": "2024-03-18",
+            "end_date": "2024-04-17",
+            "status": "ACTIVE"
+        }
+    }
+]

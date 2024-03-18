@@ -10,9 +10,12 @@ from apps.accounts.models import CustomUser, Customer
 # Create your tests here.
 
 class NewsAPITestCase(APITestCase):
+
     fixtures = ['news_post', 'accounts']
+
     @override_settings(MEDIA_ROOT=tempfile.gettempdir())
     def setUp(self):
+        
         self.user = CustomUser.objects.create(username="test", email="test@email.com", password="penedemono12")
         self.customer = Customer.objects.create(
             user = self.user,

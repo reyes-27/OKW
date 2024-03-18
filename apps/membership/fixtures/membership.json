@@ -1,0 +1,30 @@
+[
+    {
+        "model": "membership.membership",
+        "pk": "27fe6d3c-a891-476f-b1d6-62e51292a4fb",
+        "fields": {
+            "unit_price": 3.99,
+            "discount": 0,
+            "final_price": 3.99,
+            "slug": "premium-pass_a891",
+            "name": "Premium pass",
+            "level": 1,
+            "desc": "Premium access",
+            "duration": "30 00:00:00"
+        }
+    },
+    {
+        "model": "membership.membership",
+        "pk": "d9ff4cc0-b920-44d6-890b-bd53dd640901",
+        "fields": {
+            "unit_price": 0.0,
+            "discount": 0,
+            "final_price": 0.0,
+            "slug": "standard_b920",
+            "name": "Standard",
+            "level": 0,
+            "desc": "Base",
+            "duration": null
+        }
+    }
+]

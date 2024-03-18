@@ -1,9 +1,9 @@
 from  django.urls import path
 from .views import (
-    MembershipDetailAPIVIEW,
-    MembershipListAPIVIEW,
+    MembershipDetailAPIView,
+    MembershipListAPIView,
     )
 urlpatterns = [
-    path('memberships/<slug:slug>/', view=MembershipDetailAPIVIEW.as_view(), name="membership-detail"),
-    path('memberships/', view=MembershipListAPIVIEW.as_view(), name='membership-list'),
+    path('<slug:slug>/', view=MembershipDetailAPIView.as_view(), name="membership-detail"),
+    path('', view=MembershipListAPIView.as_view(), name='membership-list'),
 ]

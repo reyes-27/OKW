@@ -6,14 +6,14 @@ from .models import Membership
 from rest_framework.response import Response
 from rest_framework import status
 # Create your views here.
-class MembershipDetailAPIVIEW(APIView):
+class MembershipDetailAPIView(APIView):
     permission_classes = [AllowAny, ]
     def get(self, request, *args, **kwargs):
         membership = Membership.objects.get(slug=self.kwargs['slug'])
         serializer = MembershipSerializer(membership, context={"request":request}, read_only=True)
         return Response(data={'data':serializer.data}, status=status.HTTP_200_OK)
     
-class MembershipListAPIVIEW(APIView):
+class MembershipListAPIView(APIView):
     #SINCE I DON'T HAVE THAT MANY PRODUCTS I'LL SHOW EVERY SINGLE PRODUCTS, THE BEST CASE WOULD BE TO FILTER FOR TREND PRODUCTS
     permission_classes = [AllowAny, ]
     def get(self, request, *args, **kwargs):
