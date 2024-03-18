@@ -9,8 +9,7 @@ from django.utils import timezone
 def set_end_date(sender, created, instance, *args, **kwargs):
     if created:
         if instance.sample.duration:
-            # instance.start_date = timezone.now().date()
-            instance.end_date = instance.start_date + instance.model.duration
+            if not instance.end_date:
+                instance.end_date = instance.start_date + instance.sample.duration
             instance.save()
-    # print(instance.start_date, "------------>", instance.end_date, " : ", instance.model)
 

@@ -16,6 +16,17 @@ class AbstractItem(models.Model):
     unit_price =        models.FloatField()
     discount =          models.PositiveSmallIntegerField(validators=[MaxValueValidator(100)], blank=True, default=0)
     final_price =       models.FloatField(blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.final_price:
+            if self.unit_price >= 0:
+                self.final_price = self.unit_price
+            else:
+                self.final_price = 0
+        if self.discount > 0:
+            self.final_price = round(self.unit_price - self.unit_price * (self.discount / 100), 2)
+        self.slug = slugify(f"{self.name}_{str(self.id).split("-")[1]}")
+        super().save(*args, **kwargs)
     class Meta:
         abstract = True
 
@@ -35,14 +46,6 @@ class Product(AbstractItem):
     def save(self, *args, **kwargs):
         if not self.seller.is_seller:
             raise Exception(f"{self.seller} is not allowed to sell products. Customer object must have the seller property set to True")
-        if not self.final_price:
-            if self.unit_price >= 0:
-                self.final_price = self.unit_price
-            else:
-                self.final_price = 0
-        if self.discount > 0:
-            self.final_price = round(self.unit_price - self.unit_price * (self.discount / 100), 2)
-        self.slug = slugify(f"{self.name}_{str(self.id).split("-")[1]}")
         super(Product, self).save(*args, **kwargs)
 
 def image_path(instance, filename):

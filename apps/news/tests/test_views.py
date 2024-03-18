@@ -1,14 +1,17 @@
 import json
+import tempfile
+from django.urls import reverse
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import override_settings
 from rest_framework.test import APITestCase
 from apps.categories.models import Category
 from apps.news.models import Post, PostImage
-from django.urls import reverse
 from apps.accounts.models import CustomUser, Customer
-from django.core.files.uploadedfile import SimpleUploadedFile
 # Create your tests here.
 
 class NewsAPITestCase(APITestCase):
     fixtures = ['news_post', 'accounts']
+    @override_settings(MEDIA_ROOT=tempfile.gettempdir())
     def setUp(self):
         self.user = CustomUser.objects.create(username="test", email="test@email.com", password="penedemono12")
         self.customer = Customer.objects.create(
