@@ -2,12 +2,14 @@ from rest_framework.test import APITestCase
 from apps.accounts.models import CustomUser, Customer
 
 from ..models import CustomerMembership, Membership
-from datetime import timedelta
+from datetime import timedelta, datetime
+
 # Create your tests here.
 
 class MembershipTestCase(APITestCase):
-    fixtures = ['accounts', 'customer_membership', 'membership']
+
     def setUp(self):
+
         self.user = CustomUser.objects.create(username="test", email="test@email.com", password="penedemono12")
         self.customer = Customer.objects.create(
             user = self.user,
@@ -29,8 +31,12 @@ class MembershipTestCase(APITestCase):
         self.customer_membership = CustomerMembership.objects.create(
             user = self.user,
             sample = membership,
+            end_date = datetime.now().date()
         )
 
     def test_expiration(self):
         self.assertEqual(self.customer_membership.status, "ACTIVE")
+        self.customer_membership.set_status()
+        self.assertEqual(self.customer_membership.status, "SUSPENDED")
+
 
