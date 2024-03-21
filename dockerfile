@@ -1,10 +1,11 @@
-FROM python:3.12-slim
+FROM python:3.12-slim-bullseye
 
 # Set the working directory in docker
-WORKDIR /OKW
+WORKDIR /app
 
+ENV PYTHONUNBUFFERED=1
 # Copy the dependencies file to the working directory
-COPY requirements.txt .
+COPY ./requirements.txt .
 
 # Install any dependencies
 RUN pip install --no-cache-dir -r requirements.txt
@@ -14,13 +15,3 @@ COPY . .
 
 # Specify the command to run on container start
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-
-# WORKDIR /OKW
-
-# COPY requirements.txt .
-
-# RUN pip install -r requirements.txt
-
-# COPY . .
-
-# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
