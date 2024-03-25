@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  okw_backend:
+    image: okw_backend
+    container_name: okw_backend
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 8000:8000
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST=okw_api_db
+      - POSTGRES_PASSWORD=testpass123
+
+    depends_on:
+      - okw_api_db
+
+  okw_api_db:
+    image: postgres
+    container_name: okw_api_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST=okw_api_db
+      - POSTGRES_PASSWORD=testpass123
+
+volumes:
+  postgres_data:

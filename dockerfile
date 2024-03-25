@@ -1,17 +1,22 @@
-FROM python:3.12-slim-bullseye
+# For more information, please refer to https://aka.ms/vscode-docker-python
+FROM python:3.12-slim
 
-# Set the working directory in docker
-WORKDIR /app
 
+
+# Keeps Python from generating .pyc files in the container
+ENV PYTHONDONTWRITEBYTECODE=1
+
+# Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
-# Copy the dependencies file to the working directory
-COPY ./requirements.txt .
 
-# Install any dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+WORKDIR /usr/src/app
 
-# Copy the content of the local src directory to the working directory
-COPY . .
+# Install pip requirements
+COPY ./requirements.txt /usr/src/app/requirements.txt
+RUN pip install -r requirements.txt
 
-# Specify the command to run on container start
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+
+COPY . /usr/src/app
+
+# ENTRYPOINT [ "/usr/src/app/entrypoint.sh" ]
