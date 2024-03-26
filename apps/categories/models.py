@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Category(models.Model):
-    parent =                models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE)
+    parent =                models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="children")
     name =                  models.CharField(max_length=155)
     desc =                  models.TextField()
 

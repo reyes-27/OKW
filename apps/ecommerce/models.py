@@ -5,7 +5,6 @@ from django_resized import ResizedImageField
 
 # Create your models here.
 
-
 def demo_loc(instance, filename):
     return f'demo/{instance}/{filename}'
 
@@ -17,9 +16,5 @@ class Clothes(models.Model):
         verbose_name_plural="Clothes"
 
 
-    
-# class Article(models.Model):
-    # id = models.UUIDField(primary_key=True, editable=False, default=uuid4)
-    # slug = models.SlugField()
 
         
