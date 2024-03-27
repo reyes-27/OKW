@@ -8,6 +8,7 @@ from rest_framework import status
 from apps.items.models import Product
 from apps.categories.models import Category
 from .serializers import ProductSerializer
+from .permissions import IsSellerOrReadOnly
 from django.http import Http404
 # Create your views here.
 
@@ -43,13 +44,14 @@ class ProductListAPIView(APIView):
 
 
 class ProductDetailAPIView(APIView):
-    permission_classes=[AllowAny, ]
+    permission_classes = [IsSellerOrReadOnly, ]
     def get_object(self, slug:str):
         try:
             obj = Product.objects.get(slug=slug)
+            self.check_object_permissions(self.request, obj)
             return obj
         except:
-            raise Http404("Product does not exist.")
+            raise Http404("You are not allowed modify this product")
         
     def get(self, request, format=None, *args, **kwargs):
         product = self.get_object(kwargs["slug"])

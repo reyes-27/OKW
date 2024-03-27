@@ -51,6 +51,11 @@ class CustomerMembership(models.Model):
     #         self.start_date = timezone.now().date()
     #         self.end_date = self.start_date + self.model.duration
     #     super(CustomerMembership, self).save(*args, **kwargs)
+    def test_set_status(self, today):
+        """This function sets expired customer membemberships to suspended. Is called whenever the user logs in"""
+        if self.end_date <= today:
+            self.status = "SUSPENDED"
+            self.save()
 
     def set_status(self):
         """This function sets expired customer membemberships to suspended. Is called whenever the user logs in"""
@@ -59,8 +64,8 @@ class CustomerMembership(models.Model):
             self.save()
             
     @classmethod
-    def default_object(cls):
-        obj = cls.objects.create()
+    def default_object(cls, user):
+        obj = cls.objects.create(user=user)
         return obj
     
     def __str__(self):

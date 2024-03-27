@@ -28,15 +28,12 @@ class MembershipTestCase(APITestCase):
             duration=timedelta(days=30)
         )
 
-        self.customer_membership = CustomerMembership.objects.create(
-            user = self.user,
-            sample = membership,
-            end_date = datetime.now().date()
-        )
+        self.user.membership.sample = membership
+        self.user.membership.save()
+
 
     def test_expiration(self):
-        self.assertEqual(self.customer_membership.status, "ACTIVE")
-        self.customer_membership.set_status()
-        self.assertEqual(self.customer_membership.status, "SUSPENDED")
-
+        self.assertEqual(self.user.membership.status, "ACTIVE")
+        self.user.membership.test_set_status(self.user.membership.end_date)
+        self.assertEqual(self.user.membership.status, "SUSPENDED")
 

@@ -38,7 +38,6 @@ class Customer(models.Model):
     profile_pic =           ResizedImageField(upload_to=image_path, default="default.png")
     reputation =            models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0, editable=False)
     is_seller =             models.BooleanField(default=False)
-    # membership = models.OneToOneField(to=CustomerMembership, on_delete=models.CASCADE, related_name="customer", blank=True)
     def __str__(self):
         return f'{self.user.username} Customer'
     @property
