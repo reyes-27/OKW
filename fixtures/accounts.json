@@ -1,10 +1,67 @@
 [
     {
         "model": "accounts.customuser",
+        "pk": "8afa2b42-32a1-4c23-81a7-ae4fb0990015",
+        "fields": {
+            "password": "testpass123",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "Testing",
+            "first_name": "",
+            "last_name": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2024-03-28T17:02:02.971Z",
+            "email": "user@testemail.com",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "accounts.customuser",
+        "pk": "ae6a3a07-82b3-4e4b-ba56-12714c718a13",
+        "fields": {
+            "password": "testpass123",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "normalUser",
+            "first_name": "Normal",
+            "last_name": "Test User",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2024-03-27T19:24:14Z",
+            "email": "test3@email.com",
+            "groups": [
+                1,
+                2
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "accounts.customuser",
+        "pk": "b067ac52-4755-45a4-9d05-97c5a643766a",
+        "fields": {
+            "password": "pbkdf2_sha256$600000$G0jJtMo8HVhsrpvMPd8N08$ZAhOzNix/9JV6bhgyq4pPNyyD6IgOQXimyuqNtnuCYA=",
+            "last_login": null,
+            "is_superuser": true,
+            "username": "admin2",
+            "first_name": "",
+            "last_name": "",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2024-03-27T16:19:27.465Z",
+            "email": "admin2@email.com",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "accounts.customuser",
         "pk": "fcf717bf-63cd-463d-bec9-62aa8845a27d",
         "fields": {
             "password": "pbkdf2_sha256$600000$d2UzljoR42Mxt1b82B9mVj$0L/5INCAk6CNXi7HieAtm3XF4zm9a7PeONQlJV5aC4Y=",
-            "last_login": "2024-03-04T18:38:23.735Z",
+            "last_login": "2024-03-26T14:37:06.724Z",
             "is_superuser": true,
             "username": "admin",
             "first_name": "",
@@ -26,6 +83,20 @@
             "first_name": "Daniel",
             "last_name": "Reyes",
             "country": "VE",
+            "profile_pic": "default.png",
+            "reputation": 0,
+            "is_seller": true
+        }
+    },
+    {
+        "model": "accounts.customer",
+        "pk": "a1350a5b-87e9-4d7b-ba1b-545fe0b63197",
+        "fields": {
+            "user": "b067ac52-4755-45a4-9d05-97c5a643766a",
+            "phone": "851232133",
+            "first_name": "Daniel a",
+            "last_name": "Reyes r",
+            "country": "AR",
             "profile_pic": "default.png",
             "reputation": 0,
             "is_seller": true

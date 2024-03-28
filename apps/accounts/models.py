@@ -27,6 +27,8 @@ class CustomUser(AbstractUser):
     id =            models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     email =         models.EmailField()
     objects =       CustomUserManager()
+    # class Meta:
+    #     verbose_name="custom_user"
 
 class Customer(models.Model):
     id =                    models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)

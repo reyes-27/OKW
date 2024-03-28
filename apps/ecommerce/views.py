@@ -10,6 +10,7 @@ from apps.categories.models import Category
 from .serializers import ProductSerializer
 from .permissions import IsSellerOrReadOnly
 from django.http import Http404
+
 # Create your views here.
 
 class ProductListAPIView(APIView):
@@ -18,7 +19,7 @@ class ProductListAPIView(APIView):
     def get(self, request, format=None):
         cat = request.query_params.get("cat")
         if not cat:
-            products = Product.objects.select_related("seller")
+            products = Product.objects.select_related("seller").filter(visibility="pu")
         else:
             category = Category.objects.prefetch_related("children").get(name=cat)
             if category.children.all().exists():
@@ -27,9 +28,9 @@ class ProductListAPIView(APIView):
                 for sub_category in sub_categories:
                     categories.append(sub_category)
                 categories=tuple(categories)
-                products = Product.objects.select_related("seller").filter(categories__in=categories)
+                products = Product.objects.select_related("seller").filter(categories__in=categories, visibility="pu")
             else:
-                products = Product.objects.select_related("seller").filter(categories=category)
+                products = Product.objects.select_related("seller").filter(categories=category, visibility="pu")
                 
         serializer = ProductSerializer(products, many=True, read_only=True, context={"request":request})
         return Response(data={"data":serializer.data}, status=status.HTTP_200_OK)

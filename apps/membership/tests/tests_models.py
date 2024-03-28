@@ -4,10 +4,11 @@ from apps.accounts.models import CustomUser, Customer
 from ..models import CustomerMembership, Membership
 from datetime import timedelta, datetime
 
+
 # Create your tests here.
 
 class MembershipTestCase(APITestCase):
-
+    fixtures = ['permissions', 'groups', 'accounts']
     def setUp(self):
 
         self.user = CustomUser.objects.create(username="test", email="test@email.com", password="penedemono12")

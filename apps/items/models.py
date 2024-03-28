@@ -39,8 +39,14 @@ class Product(AbstractItem):
     stock =             models.PositiveIntegerField()
     rate =              models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], default=0)
     categories =        models.ManyToManyField(Category)
+    visibility_choices = (
+        ("pu", "Public"),
+        ("un", "Unlisted"),
+        ("pr", "Private"),
+    )
+    visibility =        models.CharField(max_length=155, choices=visibility_choices, default="pu")
     
-    def __str__(self) -> str:
+    def __str__(self):
         return self.slug
 
     def save(self, *args, **kwargs):

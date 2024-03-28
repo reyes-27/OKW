@@ -7,15 +7,18 @@ from rest_framework.test import APITestCase
 from apps.categories.models import Category
 from apps.news.models import Post, PostImage
 from apps.accounts.models import CustomUser, Customer
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
+
 # Create your tests here.
 
 class NewsAPITestCase(APITestCase):
 
-    fixtures = ['news_post', 'accounts']
+    fixtures = ['news_post', 'permissions', 'groups', 'accounts']
 
     @override_settings(MEDIA_ROOT=tempfile.gettempdir())
     def setUp(self):
-        
+
         self.user = CustomUser.objects.create(username="test", email="test@email.com", password="penedemono12")
         self.customer = Customer.objects.create(
             user = self.user,

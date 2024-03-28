@@ -5,7 +5,10 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from apps.accounts.models import CustomUser, Customer
 
 class NewsModelsTestCase(TestCase):
+    fixtures = ['permissions', 'groups', 'accounts']
+
     def setUp(self):
+
         self.user = CustomUser.objects.create(username="test", email="test@email.com", password="penedemono12")
         self.customer = Customer.objects.create(
             user = self.user,

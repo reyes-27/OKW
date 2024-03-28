@@ -4,13 +4,17 @@ from rest_framework.test import (
     )
 from apps.accounts.models import CustomUser, Customer
 from django.urls import reverse
+
 from rest_framework import status
 from apps.items.models import Product
 from apps.categories.models import Category
 import json
+
 # Create your tests here.
 
 class EcommerceTestCase(APITestCase):
+    fixtures = ['permissions', 'groups', 'accounts']
+
     def setUp(self):
         self.user = CustomUser.objects.create(username="test", email="test@email.com", password="penedemono12")
         self.customer = Customer.objects.create(
