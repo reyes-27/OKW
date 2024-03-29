@@ -56,8 +56,13 @@ class ProductDetailAPIView(APIView):
         
     def get(self, request, format=None, *args, **kwargs):
         product = self.get_object(kwargs["slug"])
-        serializer = ProductSerializer(instance=product, context={"request":request})
-        return Response(data={"data":serializer.data}, status=status.HTTP_200_OK)
+        if not product.visibility == 'pr' or request.user.customer == product.seller or request.user.is_superuser:
+            serializer = ProductSerializer(instance=product, context={"request":request})
+            return Response(data={"data":serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response(data={"error":"You are not authorized to see this article"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
     
     def patch(self, request, format=None, *args, **kwargs):
         product = self.get_object(kwargs["slug"])
