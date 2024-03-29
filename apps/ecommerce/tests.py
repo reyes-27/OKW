@@ -13,7 +13,7 @@ import json
 # Create your tests here.
 
 class EcommerceTestCase(APITestCase):
-    fixtures = ['permissions', 'groups', 'accounts']
+    fixtures = ['permissions', 'groups', 'accounts', ]
 
     def setUp(self):
         self.user = CustomUser.objects.create(username="test", email="test@email.com", password="penedemono12")
@@ -28,9 +28,10 @@ class EcommerceTestCase(APITestCase):
         # cat = Category.objects.create(name="Test", desc="pene de mono")
         self.product1 = Product.objects.create(name="waos", description="pene de mono", stock=10, unit_price=100, seller=self.customer)
         self.product2 = Product.objects.create(name="waos se no fué", description="pene de mono", stock=70, unit_price=199, seller=self.customer)
-        # self.product.category.add(cat)
+        # self.product.categories.add(cat)
         self.client.force_authenticate(user=self.user)
-        
+        # self.product3 = Product.objects.get(id='a000f987-f734-437f-9d35-a41974a0a37e')
+
     
     def test_product_detail_view(self):
         url = reverse(viewname="product-detail", kwargs={"slug":self.product1.slug})
@@ -38,16 +39,18 @@ class EcommerceTestCase(APITestCase):
         parsed_data = json.loads(response.content.decode("utf-8"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(parsed_data["data"]["name"], "waos")
-        
 
-    # def test_product_detail_view_edit(self):
+    # def test_product_detail_view_PATCH(self):
     #     #I have to write permissions before.
     #     pass
 
-    # def test_product_detail_view_delete(self):
+    # def test_product_detail_view_DELETE(self):
     #     pass
-    
-    
+        
+    def test_permssions(self):
+        url = reverse(viewname="product-detail", kwargs={"slug":"waos_f734"})
+        response = self.client.get(url)
+
     def test_product_list_view_GET(self):
         #Testing GET method
         url = reverse(viewname="product-list")
@@ -65,3 +68,4 @@ class EcommerceTestCase(APITestCase):
 
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data["name"], "test product")
+

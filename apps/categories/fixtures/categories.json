@@ -1,0 +1,1 @@
+[{"model": "categories.category", "pk": 1, "fields": {"parent": null, "name": "Tech", "desc": "waos"}}, {"model": "categories.category", "pk": 2, "fields": {"parent": 1, "name": "Programming", "desc": "Waos"}}, {"model": "categories.category", "pk": 3, "fields": {"parent": 2, "name": "Javascript", "desc": "Hola"}}]

@@ -19,8 +19,8 @@ class NewsModelsTestCase(TestCase):
             is_seller = True
         )
 
-        self.sukuna_img = SimpleUploadedFile("sukuna.png", content=open(r"C:\Users\dani2\Documents\Backend-projects\OKW\testing-assets\sukuna.png", "rb").read(), content_type="image/png")
-        self.waos_img = SimpleUploadedFile("waos.png", content=open(r"C:\Users\dani2\Documents\Backend-projects\OKW\testing-assets\waos.png", "rb").read(), content_type="image/png")
+        self.sukuna_img = SimpleUploadedFile("sukuna.png", content=open(r"./testing-assets/sukuna.png", "rb").read(), content_type="image/png")
+        self.waos_img = SimpleUploadedFile("waos.png", content=open(r"./testing-assets/waos.png", "rb").read(), content_type="image/png")
         category=Category.objects.create(name="TestCategory", desc="WAos")
         self.post = Post.objects.create(
                                         user=self.customer,

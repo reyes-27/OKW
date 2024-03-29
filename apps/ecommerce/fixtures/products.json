@@ -1,0 +1,78 @@
+[
+    {
+        "model": "items.product",
+        "pk": "2abef4b8-72a6-480d-bd23-8e85b51df9cc",
+        "fields": {
+            "unit_price": 12.0,
+            "discount": 0,
+            "final_price": 12.0,
+            "slug": "javascript-pillow_72a6",
+            "seller": "17099b14-16b0-4a40-a4fa-2992b4265633",
+            "name": "Javascript pillow",
+            "description": "A very nice pillow",
+            "stock": 1000,
+            "rate": 2,
+            "visibility": "pr",
+            "categories": [
+                3
+            ]
+        }
+    },
+    {
+        "model": "items.product",
+        "pk": "5386a1ca-f7f6-42dc-aa9d-606dac4e28b8",
+        "fields": {
+            "unit_price": 12.0,
+            "discount": 0,
+            "final_price": 12.0,
+            "slug": "python-pillow_f7f6",
+            "seller": "17099b14-16b0-4a40-a4fa-2992b4265633",
+            "name": "Python pillow",
+            "description": "<p>This python pillow is super comfortable</p>",
+            "stock": 1000,
+            "rate": 4,
+            "visibility": "pr",
+            "categories": [
+                2
+            ]
+        }
+    },
+    {
+        "model": "items.product",
+        "pk": "989fec4d-5725-4793-8bff-96cb8e27749b",
+        "fields": {
+            "unit_price": 199.0,
+            "discount": 0,
+            "final_price": 199.0,
+            "slug": "test-product_5725",
+            "seller": "17099b14-16b0-4a40-a4fa-2992b4265633",
+            "name": "test product",
+            "description": "<p>Test description</p>",
+            "stock": 70,
+            "rate": 0,
+            "visibility": "pu",
+            "categories": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "items.product",
+        "pk": "a000f987-f734-437f-9d35-a41974a0a37e",
+        "fields": {
+            "unit_price": 123.0,
+            "discount": 10,
+            "final_price": 110.7,
+            "slug": "waos_f734",
+            "seller": "a1350a5b-87e9-4d7b-ba1b-545fe0b63197",
+            "name": "Waos",
+            "description": "<p>Hi mane</p>",
+            "stock": 133,
+            "rate": 2,
+            "visibility": "pr",
+            "categories": [
+                1
+            ]
+        }
+    }
+]
