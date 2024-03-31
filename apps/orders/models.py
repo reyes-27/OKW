@@ -14,7 +14,6 @@ class Order(models.Model):
     payment_id =            models.PositiveBigIntegerField()
     customer =              models.ForeignKey(Customer, on_delete=models.CASCADE)
     payment_status =        models.BooleanField(default=False)
-    date_ordered =          models.DateTimeField(auto_now_add=True)
     order_total =           models.FloatField(default=0)
     created_at =            models.DateTimeField(auto_now_add=True)
     modified_at =           models.DateTimeField(auto_now=True)
@@ -22,6 +21,7 @@ class Order(models.Model):
 
     def save(self, *args, **kwargs):
         self.order_total = self.cart.cart_total
+        super().save(*args, **kwargs)
 
     def get_total(self, *args, **kwargs) -> object:
         """Whenever you submit an order, this function is called and it annotates an order_total value to the order instance"""
@@ -29,7 +29,7 @@ class Order(models.Model):
         return total_obj
 
     def __str__(self):
-        return f"{self.customer.get_fullname()} : ({self.date_ordered.date().strftime('%d/%m/%Y')})"
+        return f"{self.customer.full_name} : ({self.created_at.date().strftime('%d/%m/%Y')})"
 
 class CartItem(models.Model):
     id =                    models.UUIDField(primary_key=True, editable=False, default=uuid4)
@@ -53,12 +53,12 @@ class Cart(models.Model):
     customer =              models.OneToOneField(Customer, on_delete=models.CASCADE)
     cart_total =            models.FloatField(default=0)
     created_at =            models.DateTimeField(auto_now_add=True)
-
-    def save(self ,*args, **kwargs):
+    # create a list of all values iterating over self.items.all(), append the item.total_price
+    def save(self, *args, **kwargs):
         super(Cart, self).save(*args, **kwargs)
-
     def __str__(self):
         return f"{self.customer.user.username}'s cart"
+    
     def get_cart_total(self):
         return Cart.objects.filter(customer=self.customer).annotate(cart_total=Sum(F("items__")))
 # A CART WILL HANDLE MULTIPLE ORDERS 

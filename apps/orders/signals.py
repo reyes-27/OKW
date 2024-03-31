@@ -2,7 +2,7 @@ from django.dispatch import receiver
 from django.db.models import Sum
 from django.db.models.signals import post_save
 from .models import (
-    CartItem,
+    Cart,
     Order,
     )
 from apps.items.models import Product
@@ -24,3 +24,4 @@ def check_order(sender, instance, *args, **kwargs):
             product = Product.objects.get(id=item.product.id)
             product.stock -= item.quantity
             product.save()
+

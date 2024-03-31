@@ -13,7 +13,7 @@ import json
 # Create your tests here.
 
 class EcommerceTestCase(APITestCase):
-    fixtures = ['permissions', 'groups', 'accounts', ]
+    fixtures = ['permissions', 'groups', 'accounts', 'categories', 'products',]
 
     def setUp(self):
         self.user = CustomUser.objects.create(username="test", email="test@email.com", password="penedemono12")
@@ -47,9 +47,10 @@ class EcommerceTestCase(APITestCase):
     # def test_product_detail_view_DELETE(self):
     #     pass
         
-    def test_permssions(self):
+    def test_visibility(self):
         url = reverse(viewname="product-detail", kwargs={"slug":"waos_f734"})
-        response = self.client.get(url)
+        response = self.client.get(url, format='json')
+        self.assertEqual(response.status_code, 401)
 
     def test_product_list_view_GET(self):
         #Testing GET method
@@ -57,7 +58,7 @@ class EcommerceTestCase(APITestCase):
         response = self.client.get(path=url)
         parsed_response = json.loads(response.content.decode("utf-8"))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(parsed_response["data"]), 2)
+        self.assertEqual(len(parsed_response["data"]), 3)
         data = {
                 "name":"test product",
                 "description":"Test description", 

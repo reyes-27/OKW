@@ -24,9 +24,7 @@ class ProductListAPIView(APIView):
             category = Category.objects.prefetch_related("children").get(name=cat)
             if category.children.all().exists():
                 sub_categories = category.children.all()
-                categories = [category]
-                for sub_category in sub_categories:
-                    categories.append(sub_category)
+                categories = [category, *[sub_cat for sub_cat in sub_categories]]
                 categories=tuple(categories)
                 products = Product.objects.select_related("seller").filter(categories__in=categories, visibility="pu")
             else:

@@ -40,11 +40,14 @@ class Customer(models.Model):
     profile_pic =           ResizedImageField(upload_to=image_path, default="default.png")
     reputation =            models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0, editable=False)
     is_seller =             models.BooleanField(default=False)
+
     def __str__(self):
         return f'{self.user.username} Customer'
+    
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
+    
     def save(self, *args, **kwargs):
         self.first_name = self.first_name.capitalize()
         self.last_name = self.last_name.capitalize()

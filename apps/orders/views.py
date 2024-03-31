@@ -15,7 +15,7 @@ class CustomerOrderListAPIView(APIView):
     permission_classes = [AllowAny, ]
     def get(self, request, *args, **kwargs):
         orders = Order.objects.filter(customer = request.user.customer)
-        serializer = FullOrderSerializer(data=orders)
+        serializer = FullOrderSerializer(data=orders, many=True)
         return Response(data={"orders":serializer.data})
     
 
