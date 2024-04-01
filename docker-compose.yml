@@ -7,7 +7,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn --workers=2 core.wsgi:application --bind 0.0.0.0:8000
+    # command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/usr/src/app
     ports:
@@ -22,6 +23,29 @@ services:
 
     depends_on:
       - okw_api_db
+
+  # okw_backend_asgi:
+  #   image: okw_backend
+  #   container_name: okw_backend_asgi
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #   command: python -m uvicorn core.asgi:application --reload --host 0.0.0.0 --port 8080
+  #   volumes:
+  #     - .:/usr/src/app
+  #   ports:
+  #     - "8080:8080"
+      
+    # environment:
+    #   - POSTGRES_NAME=postgres
+    #   - POSTGRES_DB=postgres
+    #   - POSTGRES_USER=postgres
+    #   - POSTGRES_HOST=okw_api_db
+    #   - POSTGRES_PASSWORD=testpass123
+
+    # depends_on:
+    #   - okw_api_db
+
 
   okw_api_db:
     image: postgres

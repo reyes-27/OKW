@@ -60,7 +60,7 @@ class Cart(models.Model):
         return f"{self.customer.user.username}'s cart"
     
     def get_cart_total(self):
-        return Cart.objects.filter(customer=self.customer).annotate(cart_total=Sum(F("items__")))
+        return Cart.objects.filter(customer=self.customer).annotate(cart_total=Sum(F("items__product_price")))
 # A CART WILL HANDLE MULTIPLE ORDERS 
             
 #summarize Order.total : Sum() 

@@ -1,6 +1,7 @@
 .venv/
 __pycache__/
 migrations - Copy/
+static/
 .env
 db.sqlite3
 db copy.sqlite3
