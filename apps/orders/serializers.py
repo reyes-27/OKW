@@ -6,20 +6,36 @@ from rest_framework.serializers import (
 from .models import (
     CartItem,
     Order,
+    Cart,
 )
 from apps.ecommerce.serializers import ProductSerializer
+from apps.accounts.serializers import CustomerSerializer
 
+class OrderSerializer(HyperlinkedModelSerializer):
+    url = HyperlinkedIdentityField(
+        view_name="order-detail",
+        lookup_field="id",
+        lookup_url_kwarg="id"
+        )
 
+    class Meta:
+        model = Order 
+class FullCartItemSerializer(ModelSerializer):
 
-class FullCartItemSerializer(HyperlinkedModelSerializer):
     product = ProductSerializer()
     class Meta:
         model = CartItem
         fields = "__all__"
 
 
-class FullOrderSerializer(HyperlinkedModelSerializer):
+class FullCartSerializer(HyperlinkedModelSerializer):
+    url = HyperlinkedIdentityField(
+        view_name = "cart-detail",
+        lookup_field = "id",
+        lookup_url_kwarg = "id",
+        )
+    customer = CustomerSerializer()
     items = FullCartItemSerializer(many=True)
     class Meta:
-        model = Order
+        model = Cart
         fields = "__all__"

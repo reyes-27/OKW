@@ -42,7 +42,7 @@ class CartItem(models.Model):
         if self.quantity > self.product.stock:
             raise Exception("You can't order more items than are left")
         else:
-            self.item_total = self.product.unit_price * self.quantity
+            self.item_total = self.product.final_price * self.quantity
             super(CartItem, self).save(*args, **kwargs)
 
     def __str__(self):

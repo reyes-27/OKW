@@ -1,14 +1,19 @@
 version: '3.9'
 
 services:
+
+#==================================================================================================
   okw_backend:
     image: okw_backend
     container_name: okw_backend
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: gunicorn --workers=2 core.wsgi:application --bind 0.0.0.0:8000
-    # command: python manage.py runserver 0.0.0.0:8000
+    
+    # command: gunicorn core.wsgi:application --bind 0.0.0.0:8000 --workers=2 --threads=2
+    #For debug
+    command: python manage.py runserver 0.0.0.0:8000
+    # entrypoint: ./entrypoint
     volumes:
       - .:/usr/src/app
     ports:
@@ -23,7 +28,32 @@ services:
 
     depends_on:
       - okw_api_db
+      - redis
+#==================================================================================================
 
+  celery:
+    image: celery
+    container_name: celery
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    
+    command: celery --app=core worker -l INFO
+    # entrypoint: ./entrypoint
+    volumes:
+      - .:/usr/src/app
+      
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST=okw_api_db
+      - POSTGRES_PASSWORD=testpass123
+
+    depends_on:
+      - okw_api_db
+      - redis
+#==================================================================================================
   # okw_backend_asgi:
   #   image: okw_backend
   #   container_name: okw_backend_asgi
@@ -45,8 +75,12 @@ services:
 
     # depends_on:
     #   - okw_api_db
+#==================================================================================================
+  redis:
+    image: redis:7.2.4-alpine
+    container_name: redis
 
-
+#==================================================================================================
   okw_api_db:
     image: postgres
     container_name: okw_api_db
@@ -59,6 +93,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_HOST=okw_api_db
       - POSTGRES_PASSWORD=testpass123
-
+#==================================================================================================
 volumes:
   postgres_data:

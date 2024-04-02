@@ -1,0 +1,34 @@
+[
+    {
+        "model": "orders.order",
+        "pk": "d0e1cd2e-426c-4fa3-a9a7-a9bbdb0b3474",
+        "fields": {
+            "payment_id": 4314,
+            "customer": "17099b14-16b0-4a40-a4fa-2992b4265633",
+            "payment_status": false,
+            "order_total": 0.0,
+            "created_at": "2024-03-31T22:01:09.965Z",
+            "modified_at": "2024-03-31T22:01:56.237Z",
+            "cart": "12806da0-4c23-4999-85b3-f172cb57cfbf"
+        }
+    },
+    {
+        "model": "orders.cartitem",
+        "pk": "3d1ee673-5d01-4c86-8516-45f4e75eb94e",
+        "fields": {
+            "product": "989fec4d-5725-4793-8bff-96cb8e27749b",
+            "cart": "12806da0-4c23-4999-85b3-f172cb57cfbf",
+            "quantity": 12,
+            "item_total": 2388.0
+        }
+    },
+    {
+        "model": "orders.cart",
+        "pk": "12806da0-4c23-4999-85b3-f172cb57cfbf",
+        "fields": {
+            "customer": "17099b14-16b0-4a40-a4fa-2992b4265633",
+            "cart_total": 0.0,
+            "created_at": "2024-03-31T21:22:42.500Z"
+        }
+    }
+]

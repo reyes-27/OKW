@@ -1,4 +1,4 @@
-from .base import SECRET_KEY
+from .base import SECRET_KEY, env
 from datetime import timedelta
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -83,3 +83,6 @@ CKEDITOR_CONFIGS = {
         'width': 600,
     },
 }
+
+CELERY_BROKER_URL = env.str("CELERY_BROKER", "redis://redis:6379/0")
+CELERY_RESULT_BACKEND = env.str("CELERY_BACKEND", "redis://redis:6379/0")

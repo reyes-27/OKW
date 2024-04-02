@@ -18,11 +18,13 @@ class AbstractItem(models.Model):
     final_price =       models.FloatField(blank=True)
 
     def save(self, *args, **kwargs):
-        if not self.final_price:
-            if self.unit_price >= 0:
-                self.final_price = self.unit_price
-            else:
-                self.final_price = 0
+
+        self.final_price = self.unit_price
+            # if self.unit_price >= 0:
+            #     self.final_price = self.unit_price
+            # else:
+            #     self.final_price = 0
+
         if self.discount > 0:
             self.final_price = round(self.unit_price - self.unit_price * (self.discount / 100), 2)
         self.slug = slugify(f"{self.name}_{str(self.id).split("-")[1]}")
