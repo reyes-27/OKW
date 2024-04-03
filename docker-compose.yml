@@ -51,9 +51,28 @@ services:
       - POSTGRES_PASSWORD=testpass123
 
     depends_on:
+      - okw_backend
       - okw_api_db
       - redis
 #==================================================================================================
+
+  celery2:
+    container_name: celery2
+    build:
+      context: ./my_celery_worker
+      dockerfile: Dockerfile
+    
+    command: celery -A my_celery worker -l INFO
+    # entrypoint: ./entrypoint
+    volumes:
+      - ./my_celery_worker:/usr/src/app
+    depends_on:
+      - okw_backend
+      - okw_api_db
+      - redis
+
+#==================================================================================================
+  
   # okw_backend_asgi:
   #   image: okw_backend
   #   container_name: okw_backend_asgi
