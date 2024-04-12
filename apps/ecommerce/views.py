@@ -15,8 +15,8 @@ from django.http import Http404
 
 class ProductListAPIView(APIView):
     permission_classes = [AllowAny, ]
-
     def get(self, request, format=None):
+
         cat = request.query_params.get("cat")
         if not cat:
             products = Product.objects.select_related("seller").filter(visibility="pu")
