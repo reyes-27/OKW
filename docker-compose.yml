@@ -31,29 +31,29 @@ services:
       - redis
 #==================================================================================================
 
-  celery:
-    image: celery
-    container_name: celery
-    build:
-      context: .
-      dockerfile: ./Dockerfile
+  # celery:
+  #   image: celery
+  #   container_name: celery
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
     
-    command: celery --app=core worker -l INFO
-    # entrypoint: ./entrypoint
-    volumes:
-      - .:/usr/src/app
+  #   command: celery --app=core worker -l INFO
+  #   # entrypoint: ./entrypoint
+  #   volumes:
+  #     - .:/usr/src/app
       
-    environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_HOST=okw_api_db
-      - POSTGRES_PASSWORD=testpass123
+  #   environment:
+  #     - POSTGRES_NAME=postgres
+  #     - POSTGRES_DB=postgres
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_HOST=okw_api_db
+  #     - POSTGRES_PASSWORD=testpass123
 
-    depends_on:
-      - okw_backend
-      - okw_api_db
-      - redis
+  #   depends_on:
+  #     - okw_backend
+  #     - okw_api_db
+  #     - redis
 #==================================================================================================
 
   celery2:
