@@ -38,7 +38,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     
-    command: celery --app=core worker -l INFO -Q queue1
+    command: celery --app=core worker -l INFO -Q queue,queue:1,queue:2,queue:3
     # entrypoint: ./entrypoint
     volumes:
       - .:/usr/src/app

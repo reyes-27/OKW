@@ -144,5 +144,3 @@ FIXTURE_DIRS = [BASE_DIR/"fixtures",]
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
-CELERY_BROKER_URL = 'redis://redis:6379/0'
