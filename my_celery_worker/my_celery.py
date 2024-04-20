@@ -16,7 +16,11 @@ app.config_from_object('celery_settings')
 app.conf.update(
     result_expires=3600,
 )
-
+app.conf.task_routes = {
+    'tasks.ecommerce_tasks.add': {
+        'queue':'queue1'
+    }
+}
 app.autodiscover_tasks()
 
 app.task()

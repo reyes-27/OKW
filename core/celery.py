@@ -12,4 +12,13 @@ app = Celery("core")
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
+app.conf.task_routes = {
+    'apps.ecommerce.add': {
+        'queue':'queue1'
+    },
+    'apps.ecommerce.subtract': {
+        'queue':'queue2'
+    }
+}
+
 app.autodiscover_tasks()
