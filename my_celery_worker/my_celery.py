@@ -1,13 +1,7 @@
 import os
 from celery import Celery
-# from ..core.settings import BASE_DIR
-
-# env = Env()
-# env.read_env(os.path.join(BASE_DIR,'../core/.env'))
 
 app = Celery("tasks",
-            # broker="redis://redis:6379/0",
-            # backend="redis://redis:6379/0",
             include=[
                 'tasks.ecommerce_tasks',
                     ],
@@ -18,11 +12,12 @@ app.conf.update(
 )
 # app.conf.task_routes = {
 #     'tasks.ecommerce_tasks.add': {
-#         'queue':'queue1'
+#         'queue':'queue:0'
 #     }
 # }
+
 app.autodiscover_tasks()
 
-app.task()
+# app.task()
 if __name__ == '__main__':
     app.start()

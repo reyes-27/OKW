@@ -1,13 +1,14 @@
 from rest_framework.views import APIView
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
-from .serializers import FullCartItemSerializer, FullCartSerializer
+from .serializers import FullCartItemSerializer, FullCartSerializer, OrderSerializer
 from apps.items.models import Product
 from .models import (
     Order,
     CartItem,
     Cart,
     )
+from rest_framework import status
 from rest_framework.response import Response
 
 # Create your views here.
@@ -21,7 +22,13 @@ class CustomerCartAPIView(APIView):
     
 #ASYNC
 class CustomerOrderListAPIView(APIView):
-    pass
+    permission_classes = [AllowAny, ]
+    def get(self, request):
+        orders = Order.objects.filter(customer=request.user.customer)
+        serializer = OrderSerializer(orders, many=True, context = {"request":request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
 
 class CustomerOrderDetailAPIView(APIView):
     pass

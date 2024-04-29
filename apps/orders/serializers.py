@@ -11,15 +11,6 @@ from .models import (
 from apps.ecommerce.serializers import ProductSerializer
 from apps.accounts.serializers import CustomerSerializer
 
-class OrderSerializer(HyperlinkedModelSerializer):
-    url = HyperlinkedIdentityField(
-        view_name="order-detail",
-        lookup_field="id",
-        lookup_url_kwarg="id"
-        )
-
-    class Meta:
-        model = Order 
 class FullCartItemSerializer(ModelSerializer):
 
     product = ProductSerializer()
@@ -38,4 +29,28 @@ class FullCartSerializer(HyperlinkedModelSerializer):
     items = FullCartItemSerializer(many=True)
     class Meta:
         model = Cart
+        fields = "__all__"
+
+class ShortCartSerializer(HyperlinkedModelSerializer):
+    url = HyperlinkedIdentityField(
+        view_name = "cart-detail",
+        lookup_field = "id",
+        lookup_url_kwarg = "id",
+        )
+    class Meta:
+        model = Cart
+        exclude = ["customer"]
+
+# class ShortCartSerializer()
+
+class OrderSerializer(HyperlinkedModelSerializer):
+    url = HyperlinkedIdentityField(
+        view_name="order-detail",
+        lookup_field="id",
+        lookup_url_kwarg="id"
+        )
+    customer = CustomerSerializer()
+    cart = ShortCartSerializer(read_only=True)
+    class Meta:
+        model = Order 
         fields = "__all__"

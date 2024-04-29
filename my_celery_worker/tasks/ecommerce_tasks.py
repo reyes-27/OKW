@@ -5,5 +5,5 @@ from celery import shared_task
         # bind=True,
         # acks_late=True,
         )
-def add(x, y):
+def add(x, y, queue="queue:0"):
     return x + y
