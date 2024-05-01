@@ -10,15 +10,23 @@ from uuid import uuid4
 # Create your models here.
 
 class Order(models.Model):
+    status_choices = (
+        ("SHIPPED", "Shipped"),
+        ("CONFIRMED", "Confirmed"),
+        ("CANCELED", "Canceled"),
+        ("P_SHIPPED", "Partially shipped"),
+        ("OTHER", "Not confirmed"),
+    )
+    
     id =                    models.UUIDField(primary_key=True, editable=False, default=uuid4)
     payment_id =            models.PositiveBigIntegerField()
     customer =              models.ForeignKey(Customer, on_delete=models.CASCADE)
     payment_status =        models.BooleanField(default=False)
+    status =                models.CharField(max_length=155, choices=status_choices, default="OTHER")
     order_total =           models.FloatField(default=0)
     created_at =            models.DateTimeField(auto_now_add=True)
     modified_at =           models.DateTimeField(auto_now=True)
     cart =                  models.OneToOneField("Cart", on_delete=models.CASCADE, blank=True, null=True)
-
     def save(self, *args, **kwargs):
         self.order_total = self.cart.cart_total
         super().save(*args, **kwargs)

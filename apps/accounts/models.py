@@ -45,7 +45,7 @@ class Customer(models.Model):
         return f'{self.user.username} Customer'
     
     @property
-    def full_name(self):
+    def full_name(self) -> str:
         return f"{self.first_name} {self.last_name}"
     
     def save(self, *args, **kwargs):
