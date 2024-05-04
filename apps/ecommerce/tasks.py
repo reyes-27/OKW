@@ -2,8 +2,8 @@ from celery import shared_task
 from core.celery import app
 import time
 
-@shared_task()
-def subtract(x, y, queue="queue"):
+@shared_task
+def subtract(x, y, queue="queue:0"):
     time.sleep(3)
     return x - y
 

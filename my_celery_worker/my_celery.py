@@ -7,14 +7,11 @@ app = Celery("tasks",
                     ],
             )
 app.config_from_object('celery_settings')
-app.conf.update(
-    result_expires=3600,
-)
-# app.conf.task_routes = {
-#     'tasks.ecommerce_tasks.add': {
-#         'queue':'queue:0'
-#     }
-# }
+app.conf.task_routes = {
+    'tasks.ecommerce_tasks.split_numbers': {
+        'queue':'queue:4'
+    }
+}
 
 app.autodiscover_tasks()
 
