@@ -20,7 +20,7 @@ class CustomerCartAPIView(APIView):
         serializer = FullCartSerializer(instance=cart, context={"request":request})
         return Response(data={"cart":serializer.data})
     
-#ASYNC
+
 class CustomerOrderListAPIView(APIView):
     permission_classes = [AllowAny, ]
     def get(self, request):
