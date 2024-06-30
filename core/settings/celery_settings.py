@@ -8,8 +8,8 @@ CELERY_BROKER_URL = 'redis://redis:6379/0'
 #         'queue':'queue'
 #     },
 # }
-CELERY_BROKER_TRANSPORT_OPTIONS = {
-    "priority_steps":list(range(10)),
-    "sep":':',
-    "queue_order_strategy":"priority",
-}
+# CELERY_BROKER_TRANSPORT_OPTIONS = {
+#     "priority_steps":list(range(10)),
+#     "sep":':',
+#     "queue_order_strategy":"priority",
+# }

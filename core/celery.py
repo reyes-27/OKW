@@ -10,9 +10,9 @@ env.read_env(os.path.join(BASE_DIR,'core/.env'))
 
 app = Celery(
     "core",
-    include=[
-        "apps.ecommerce.tasks"
-    ]
+    # include=[
+    #     "apps.ecommerce.tasks"
+    # ]
     )
 
 app.config_from_object('django.conf:settings', namespace='CELERY')

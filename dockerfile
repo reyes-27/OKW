@@ -1,5 +1,5 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
-FROM python:3.12.2-slim-bullseye
+FROM python:3.12.4-slim-bullseye
 
 EXPOSE 8000 8080
 WORKDIR /usr/src/app

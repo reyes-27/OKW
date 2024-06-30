@@ -11,3 +11,6 @@ def subtract(x, y, queue="queue:0"):
 def add(x, y, queue="queue:1"):
     time.sleep(3)
     return x + y
+@shared_task
+def greet():
+    return "hello world"
