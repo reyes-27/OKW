@@ -50,6 +50,7 @@ MY_APPS = [
     'apps.orders.apps.OrdersConfig',
     'apps.news.apps.NewsConfig',
     'apps.special_orders.apps.SpecialOrdersConfig',
+    'apps.invoices.apps.InvoicesConfig',
 ]
 THIRD_PARTY_APPS = [
     'rest_framework',

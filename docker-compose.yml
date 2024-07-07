@@ -96,12 +96,12 @@ services:
     #   - okw_api_db
 #==================================================================================================
   redis:
-    image: redis:7.2.4-alpine
+    image: redis:7.2.5-alpine
     container_name: redis
 
 #==================================================================================================
   okw_api_db:
-    image: postgres
+    image: postgres:16.3-bullseye
     container_name: okw_api_db
     volumes:
       - postgres_data:/var/lib/postgresql/data/

@@ -9,6 +9,19 @@ from uuid import uuid4
 
 # Create your models here.
 
+class Payment(models.Model):
+    payment_id =            models.PositiveBigIntegerField()
+    payment_status =        models.BooleanField(default=False)
+    total =                 models.FloatField(default=0)
+    created_at =            models.DateTimeField(auto_now_add=True)
+    modified_at =           models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        self.total = self.order.get_total()
+        super(Payment, self).save(*args, **kwargs)
+
+
+
 class Order(models.Model):
     status_choices = (
         ("SHIPPED", "Shipped"),
@@ -19,19 +32,17 @@ class Order(models.Model):
     )
     
     id =                    models.UUIDField(primary_key=True, editable=False, default=uuid4)
-    payment_id =            models.PositiveBigIntegerField()
     customer =              models.ForeignKey(Customer, on_delete=models.CASCADE)
-    payment_status =        models.BooleanField(default=False)
+    cart =                  models.OneToOneField("Cart", on_delete=models.SET_NULL, blank=True, null=True)
+    payment =               models.OneToOneField(Payment, blank=True, null=True, on_delete=models.SET_NULL)
     status =                models.CharField(max_length=155, choices=status_choices, default="OTHER")
-    order_total =           models.FloatField(default=0)
     created_at =            models.DateTimeField(auto_now_add=True)
     modified_at =           models.DateTimeField(auto_now=True)
-    cart =                  models.OneToOneField("Cart", on_delete=models.CASCADE, blank=True, null=True)
     def save(self, *args, **kwargs):
         self.order_total = self.cart.cart_total
         super().save(*args, **kwargs)
 
-    def get_total(self, *args, **kwargs) -> object:
+    def get_total(self, *args, **kwargs):
         """Whenever you submit an order, this function is called and it annotates an order_total value to the order instance"""
         total_obj = Order.objects.filter(pk=self.pk).annotate(order_total = Sum(F("items__item_total")))
         return total_obj
