@@ -10,7 +10,13 @@ from uuid import uuid4
 # Create your models here.
 
 class Payment(models.Model):
+    payment_choices = (
+        ("CH", "Cash"),
+        ("DT", "Debit"),
+        ("CT", "Credit"),
+    )
     payment_id =            models.PositiveBigIntegerField()
+    payment_method =        models.CharField(max_length=155, choices=payment_choices)
     payment_status =        models.BooleanField(default=False)
     total =                 models.FloatField(default=0)
     created_at =            models.DateTimeField(auto_now_add=True)
