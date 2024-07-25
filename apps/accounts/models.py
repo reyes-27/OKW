@@ -7,6 +7,12 @@ from django_countries.fields import CountryField
 from django_resized import ResizedImageField
 from .utils import image_path
 # Create your models here.
+
+class CustomerAddress(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+    department_code = models.PositiveIntegerField()
+    
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, username, password=None):
         email=self.normalize_email(email)
@@ -54,5 +60,7 @@ class Customer(models.Model):
         # if self.membership != None:
         #     self.membership = CustomerMembership.default_object
         super(Customer, self).save(*args, **kwargs)
+
+
 
 
