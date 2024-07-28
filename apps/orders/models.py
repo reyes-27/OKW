@@ -19,11 +19,12 @@ class Payment(models.Model):
     payment_method =        models.CharField(max_length=155, choices=payment_choices)
     payment_status =        models.BooleanField(default=False)
     total =                 models.FloatField(default=0)
+    order =                 models.OneToOneField("Order", blank=True, null=True, on_delete=models.SET_NULL, related_name="payment")
     created_at =            models.DateTimeField(auto_now_add=True)
     modified_at =           models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        self.total = self.order.get_total()
+        self.total = self.order.order_total
         super(Payment, self).save(*args, **kwargs)
 
 
@@ -40,8 +41,9 @@ class Order(models.Model):
     id =                    models.UUIDField(primary_key=True, editable=False, default=uuid4)
     customer =              models.ForeignKey(Customer, on_delete=models.CASCADE)
     cart =                  models.OneToOneField("Cart", on_delete=models.SET_NULL, blank=True, null=True)
-    payment =               models.OneToOneField(Payment, blank=True, null=True, on_delete=models.SET_NULL)
+    # payment =               models.OneToOneField(Payment, blank=True, null=True, on_delete=models.SET_NULL)
     status =                models.CharField(max_length=155, choices=status_choices, default="OTHER")
+    order_total =           models.FloatField(default=0)
     created_at =            models.DateTimeField(auto_now_add=True)
     modified_at =           models.DateTimeField(auto_now=True)
     def save(self, *args, **kwargs):
@@ -78,14 +80,22 @@ class Cart(models.Model):
     customer =              models.OneToOneField(Customer, on_delete=models.CASCADE)
     cart_total =            models.FloatField(default=0)
     created_at =            models.DateTimeField(auto_now_add=True)
+    ready_to_order =        models.BooleanField(default=False)
+
     # create a list of all values iterating over self.items.all(), append the item.total_price
     def save(self, *args, **kwargs):
+        if self.ready_to_order:
+            item_prices = []
+            for item in self.items.all():
+                item_prices.append(item.item_total)
+            self.cart_total = sum(item_prices)
+
         super(Cart, self).save(*args, **kwargs)
     def __str__(self):
         return f"{self.customer.user.username}'s cart"
     
-    def get_cart_total(self):
-        return Cart.objects.filter(customer=self.customer).annotate(cart_total=Sum(F("items__product_price")))
+    # def get_cart_total(self):
+    #     return Cart.objects.filter(customer=self.customer).annotate(cart_total=Sum(F("items__product_price")))
 # A CART WILL HANDLE MULTIPLE ORDERS 
             
 #summarize Order.total : Sum() 
